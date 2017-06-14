@@ -1,0 +1,10 @@
+{
+  "title": "crossbow",
+  "source": "./api",
+  "destination": "./docs",
+  "coverage": true,
+  "test": {
+    "type": "mocha",
+    "source": "./test"
+  }
+}
