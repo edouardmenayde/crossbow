@@ -9,23 +9,22 @@ const path = require('path');
 
 module.exports = {
   log     : {
-    level: 'silent'
+    level: 'verbose'
   },
   wetland : {
     entityPath   : path.resolve(process.cwd(), 'api', 'entity'),
     dataDirectory: path.resolve(process.cwd(), './test/.data'),
     stores    : {
-      testStore: {
+      defaultStore: {
         client    : 'mysql',
         connection: {
           host    : '127.0.0.1',
           user    : 'root',
           password: '',
-          database: 'crossbowTest'
+          database: 'crossbow_test'
         }
       }
-    },
-    defaultStore : 'testStore'
+    }
   },
   policies: {
     '*': true

@@ -5,26 +5,26 @@
  * @description :: Configuration file where you configure your passport authentication
  */
 
-const _ = require('lodash');
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const FacebookTokenStrategy = require('passport-facebook-token');
-const TwitterTokenStrategy = require('passport-twitter-token');
-const VKontakteTokenStrategy = require('passport-vkontakte-token');
-const FoursquareTokenStrategy = require('passport-foursquare-token');
-const GitHubTokenStrategy = require('passport-github-token');
-const InstagramTokenStrategy = require('passport-instagram-token');
-const PayPalTokenStrategy = require('passport-paypal-token');
-const RedditTokenStrategy = require('passport-reddit-token');
-const SoundCloudTokenStrategy = require('passport-soundcloud-token');
+const _                        = require('lodash');
+const passport                 = require('passport');
+const LocalStrategy            = require('passport-local').Strategy;
+const JwtStrategy              = require('passport-jwt').Strategy;
+const ExtractJwt               = require('passport-jwt').ExtractJwt;
+const FacebookTokenStrategy    = require('passport-facebook-token');
+const TwitterTokenStrategy     = require('passport-twitter-token');
+const VKontakteTokenStrategy   = require('passport-vkontakte-token');
+const FoursquareTokenStrategy  = require('passport-foursquare-token');
+const GitHubTokenStrategy      = require('passport-github-token');
+const InstagramTokenStrategy   = require('passport-instagram-token');
+const PayPalTokenStrategy      = require('passport-paypal-token');
+const RedditTokenStrategy      = require('passport-reddit-token');
+const SoundCloudTokenStrategy  = require('passport-soundcloud-token');
 const WindowsLiveTokenStrategy = require('passport-windows-live-token');
-const TwitchTokenStrategy = require('passport-twitch-token');
-const YandexTokenStrategy = require('passport-yandex-token');
-const AmazonTokenStrategy = require('passport-amazon-token');
-const GooglePlusTokenStrategy = require('passport-google-plus-token');
-const YahooTokenStrategy = require('passport-yahoo-token');
+const TwitchTokenStrategy      = require('passport-twitch-token');
+const YandexTokenStrategy      = require('passport-yandex-token');
+const AmazonTokenStrategy      = require('passport-amazon-token');
+const GooglePlusTokenStrategy  = require('passport-google-plus-token');
+const YahooTokenStrategy       = require('passport-yahoo-token');
 
 /**
  * Configuration object for local strategy
@@ -32,9 +32,9 @@ const YahooTokenStrategy = require('passport-yahoo-token');
  * @private
  */
 const LOCAL_STRATEGY_CONFIG = {
-  usernameField: 'email',
-  passwordField: 'password',
-  session: false,
+  usernameField    : 'email',
+  passwordField    : 'password',
+  session          : false,
   passReqToCallback: true
 };
 
@@ -44,11 +44,11 @@ const LOCAL_STRATEGY_CONFIG = {
  * @private
  */
 const JWT_STRATEGY_CONFIG = {
-  secretOrKey: 'DEFAULT_SECRET_KEY',
-  jwtFromRequest: ExtractJwt.versionOneCompatibility({authScheme: 'Bearer', tokenBodyField: 'access_token'}),
+  secretOrKey            : 'DEFAULT_SECRET_KEY',
+  jwtFromRequest         : ExtractJwt.versionOneCompatibility({authScheme: 'Bearer', tokenBodyField: 'access_token'}),
   tokenQueryParameterName: 'access_token',
-  session: false,
-  passReqToCallback: true
+  session                : false,
+  passReqToCallback      : true
 };
 
 /**
@@ -57,10 +57,10 @@ const JWT_STRATEGY_CONFIG = {
  * @private
  */
 const SOCIAL_STRATEGY_CONFIG = {
-  clientID: '-',
-  clientSecret: '-',
-  consumerKey: '-',
-  consumerSecret: '-',
+  clientID         : '-',
+  clientSecret     : '-',
+  consumerKey      : '-',
+  consumerSecret   : '-',
   passReqToCallback: true
 };
 
@@ -111,15 +111,15 @@ const _onJwtStrategyAuth = (req, payload, next) => {
  */
 const _onSocialStrategyAuth = (req, accessToken, refreshToken, profile, next) => {
   if (!req.user) {
-    let criteria = {};
+    let criteria                                           = {};
     criteria['socialProfiles.' + profile.provider + '.id'] = profile.id;
 
-    let model = {
-      username: profile.username || profile.displayName || '',
-      email: (profile.emails[0] && profile.emails[0].value) || '',
-      firstName: (profile.name && profile.name.givenName) || '',
-      lastName: (profile.name && profile.name.familyName) || '',
-      photo: (profile.photos[0] && profile.photos[0].value) || '',
+    let model                              = {
+      username      : profile.username || profile.displayName || '',
+      email         : (profile.emails[0] && profile.emails[0].value) || '',
+      firstName     : (profile.name && profile.name.givenName) || '',
+      lastName      : (profile.name && profile.name.familyName) || '',
+      photo         : (profile.photos[0] && profile.photos[0].value) || '',
       socialProfiles: {}
     };
     model.socialProfiles[profile.provider] = profile._json;
@@ -141,20 +141,16 @@ module.exports = {
   passport: {
     /**
      * Triggers when all Passport steps is done and user profile is parsed
-     * @param {Object} req Request object
+     *
      * @param {Object} res Response object
-     * @param {Object} error Object with error info
      * @param {Object} user User object
-     * @param {Object} info Information object
      * @returns {*}
      * @private
      */
-    onPassportAuth(req, res, error, user, info) {
-      if (error || !user) return res.negotiate(error || info);
-
+    onPassportAuth(res, user) {
       return res.ok({
         token: CipherService.jwt.encodeSync({id: user.id}),
-        user: user
+        user : user
       });
     }
   }

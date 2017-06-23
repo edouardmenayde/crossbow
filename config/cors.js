@@ -13,12 +13,12 @@ module.exports = {
     /**
      * Allow CORS on all routes by default?
      */
-    allRoutes: false,
+    allRoutes: true,
 
     /**
      * Which domains which are allowed CORS access?
      */
-    origin: '*',
+    origin: process.env.CORS_ORIGIN,
 
     /**
      * Allow cookies to be shared for CORS requests?
