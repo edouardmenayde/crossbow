@@ -26,13 +26,12 @@
     "passport-yandex-token": "^2.1.0",
     "pluralize": "^5.0.0",
     "rc": "1.2.1",
+    "request-helpers": "^2.1.0",
     "sails": "0.12.13",
-    "sails-disk": "^0.10.10",
     "sails-hook-wetland": "^2.0.0",
-    "sails-memory": "0.10.7",
-    "sails-mongo": "^0.12.2",
     "sails-service-cipher": "^3.2.1",
-    "sails-service-hash": "^3.2.1"
+    "sails-service-hash": "^3.2.1",
+    "wetland": "^2.1.0"
   },
   "devDependencies": {
     "esdoc": "0.5.2",

@@ -5,8 +5,14 @@
  * @description :: Server-side logic for manage users' authorization
  */
 
-const _ = require('lodash');
-const passport = require('passport');
+const _              = require('lodash');
+const passport       = require('passport');
+const requestHelpers = require('request-helpers');
+
+const userBlueprint = [
+  {param: 'username', cast: 'string', required: true},
+  {param: 'password', cast: 'string', required: true}
+];
 
 module.exports = {
   /**
@@ -15,7 +21,34 @@ module.exports = {
    * @param res
    */
   signin(req, res) {
-    passport.authenticate('local', _.partial(sails.config.passport.onPassportAuth, req, res))(req, res);
+    let values = requestHelpers.secureParameters(userBlueprint, req);
+
+    if (!values.isValid()) {
+      return res.badRequest();
+    }
+
+    values = values.asObject();
+
+    const manager        = req.getManager();
+    const User           = manager.getEntity('User');
+    const UserRepository = manager.getRepository(User);
+
+    UserRepository
+      .findOne({
+        username: values.username
+      })
+      .then(user => {
+        return Promise.all([
+          user,
+          HashService.bcrypt.compare(values.password, user.password)
+        ]);
+      })
+      .then(response => {
+        let [user] = response;
+
+        return passport.authenticate('local', _.partial(sails.config.passport.onPassportAuth, res, user))(req, res);
+      })
+      .catch(res.negotiate);
   },
 
   /**
@@ -24,15 +57,35 @@ module.exports = {
    * @param res
    */
   signup(req, res) {
-    const values = _.omit(req.allParams(), 'id');
+    let values = requestHelpers.secureParameters(userBlueprint, req);
 
-    User
-      .create(values)
-      .then(user => {
-        return {token: CipherService.jwt.encodeSync({id: user.id}), user: user}
+    if (!values.isValid()) {
+      return res.badRequest();
+    }
+
+    values = values.asObject();
+
+    const manager   = req.getManager();
+    const User      = manager.getEntity('User');
+    const populator = req.wetland.getPopulator(manager);
+    const populated = populator.assign(User, values);
+
+    manager
+      .persist(populated)
+      .flush()
+      .then(response => {
+        let user = response.cleanObjects[0];
+
+        return {
+          token: CipherService.jwt.encodeSync({id: user.id}),
+          user : user
+        };
       })
       .then(res.created)
-      .catch(res.negotiate);
+      .catch((error) => {
+        console.log(error);
+        res.negotiate(error);
+      });
   },
 
   /**
@@ -41,7 +94,7 @@ module.exports = {
    * @param res
    */
   social(req, res) {
-    const type = req.param('type') ? req.param('type').toLowerCase() : '-';
+    const type         = req.param('type') ? req.param('type').toLowerCase() : '-';
     const strategyName = [type, 'token'].join('-');
 
     if (Object.keys(passport._strategies).indexOf(strategyName) === -1) {
@@ -60,12 +113,18 @@ module.exports = {
    * @param res
    */
   refresh_token(req, res) {
-    if (!req.param('token')) return res.badRequest(null, {message: 'You must provide token parameter'});
+    if (!req.param('token')) {
+      return res.badRequest(null, {
+        message: 'You must provide token parameter'
+      });
+    }
 
     const oldDecoded = CipherService.jwt.decodeSync(req.param('token'));
 
     res.ok({
-      token: CipherService.jwt.encodeSync({id: oldDecoded.id})
+      token: CipherService.jwt.encodeSync({
+        id: oldDecoded.id
+      })
     });
   }
 };

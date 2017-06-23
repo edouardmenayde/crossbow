@@ -4,7 +4,7 @@ module.exports = {
   services: {
     cipher: {
       jwt: {
-        secretKey: 'DEFAULT_SECRET_KEY'
+        secretKey: process.env.JWT_SECRET_KEY || 'DEFAULT_SECRET_KEY'
       }
     }
   }
