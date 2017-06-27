@@ -30,6 +30,10 @@ module.exports = class User extends Entity {
    * @returns {*}
    */
   beforeUpdate(values) {
+    if (values.password === '') {
+      throw Error('Password cannot be empty.');
+    }
+
     if (!values.password) {
       delete values.password;
 
