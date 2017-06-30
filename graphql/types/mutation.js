@@ -2,7 +2,7 @@ const {GraphQLObjectType} = require('graphql');
 const signup              = require('./signup');
 const signin              = require('./signin');
 
-const MutationType = new GraphQLObjectType({
+module.exports = new GraphQLObjectType({
   name  : 'Mutation',
   fields: {
     signup,
@@ -10,4 +10,3 @@ const MutationType = new GraphQLObjectType({
   }
 });
 
-module.exports = MutationType;

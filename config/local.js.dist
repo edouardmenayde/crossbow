@@ -1,3 +1,10 @@
-module.exports.cors = {
-  origin: 'http://localhost:8080'
+module.exports = {
+  cors  : {
+    origin: 'http://localhost:8080'
+  },
+  # https://trello.com/app-key
+  trello: {
+    key   : '',
+    secret: ''
+  }
 };
