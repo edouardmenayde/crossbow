@@ -1,4 +1,4 @@
-const {Entity} = require('wetland');
+const {Entity}    = require('wetland');
 
 module.exports = class User extends Entity {
   static setMapping(mapping) {
@@ -8,6 +8,9 @@ module.exports = class User extends Entity {
     // Fields
     mapping.forProperty('username').field({type: 'string'});
     mapping.forProperty('password').field({type: 'string'});
+
+    // Relations
+    mapping.forProperty('serviceLinks').oneToMany({targetEntity: 'ServiceLink', inversedBy: 'user'});
   }
 
   /**
