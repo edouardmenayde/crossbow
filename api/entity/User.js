@@ -1,5 +1,9 @@
 const {Entity}    = require('wetland');
 
+/**
+ * @Todo:: Add createdAt and updatedAt.
+ * @type {User}
+ */
 module.exports = class User extends Entity {
   static setMapping(mapping) {
     // Primary Key

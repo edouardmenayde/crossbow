@@ -1,6 +1,6 @@
 const {GraphQLNonNull, GraphQLString} = require('graphql');
 const {mutationWithClientMutationId}  = require('graphql-relay');
-const User                            = require('./User');
+const User                            = require('../types/User');
 
 module.exports = mutationWithClientMutationId({
   name               : 'Signup',
