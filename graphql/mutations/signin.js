@@ -1,6 +1,6 @@
 const {GraphQLNonNull, GraphQLString} = require('graphql');
 const {mutationWithClientMutationId}  = require('graphql-relay');
-const User                            = require('./User');
+const User                            = require('../types/User');
 
 module.exports = mutationWithClientMutationId({
   name               : 'Signin',
@@ -41,7 +41,7 @@ module.exports = mutationWithClientMutationId({
       }
 
       return {
-        token: CipherService.jwt.encodeSync({id: user.id}),
+        token: await CipherService.jwt.encode({user: user}),
         user : user
       };
     }
