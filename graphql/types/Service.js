@@ -15,6 +15,10 @@ module.exports = new GraphQLObjectType({
         type       : GraphQLString,
         description: 'Name of the service'
       },
+      tag : {
+        type       : GraphQLString,
+        description: 'Unique tag of the service'
+      },
       links: {
         type: new GraphQLList(ServiceLink)
       }
