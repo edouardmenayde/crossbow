@@ -1,7 +1,7 @@
 const {EntityRepository} = require('wetland');
 
 export default class ServiceRepository extends EntityRepository {
-  findForUserWithLinks(criteria) {
+  findForUserWithLinks() {
     let queryBuilder = this.getQueryBuilder('s');
 
     return queryBuilder

@@ -15,7 +15,7 @@ const wetland = {
         pool              : true,
         waitForConnections: true
       }
-    },
+    }
   }
 };
 

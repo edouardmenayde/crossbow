@@ -1,0 +1,7 @@
+{
+  "presets": [
+    "es2017",
+    "import-export",
+    "stage-0"
+  ]
+}

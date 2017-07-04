@@ -25,10 +25,7 @@
     "test:watch": "NODE_ENV=test jest --watch",
     "test:coverage": "npm test -- --coverage --collectCoverageFrom 'app/**/*.js' --collectCoverageFrom 'graphql/**/*.js'"
   },
-  "lint-staged": {
-    "lint:eslint": "*.js"
-  },
-  "pre-commit": "lint:staged",
+  "pre-commit": ["lint:eslint"],
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-core": "^6.17.0",

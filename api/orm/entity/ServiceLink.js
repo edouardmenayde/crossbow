@@ -33,7 +33,7 @@ export default class ServiceLink {
     this.createdAt = this.updatedAt = new Date();
   }
 
-  beforeUpdate(values) {
+  beforeUpdate() {
     this.updatedAt = new Date();
   }
 };
