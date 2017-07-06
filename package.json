@@ -21,9 +21,10 @@
     "lint:eslint": "eslint .",
     "lint:eslint:fix": "eslint . --fix",
     "lint:staged": "lint-staged",
-    "test": "babel-node test/unit/setup && NODE_ENV=test jest --forceExit",
-    "test:watch": "babel-node test/unit/setup && NODE_ENV=test jest --watch  --forceExit",
-    "test:coverage": "npm test -- --coverage"
+    "test": "npm run migrate:dev && NODE_ENV=test jest --forceExit",
+    "test:watch": "npm run migrate:dev && NODE_ENV=test jest --watch  --forceExit",
+    "test:coverage": "npm test -- --coverage",
+    "migrate:dev": "babel-node test/unit/setup"
   },
   "pre-commit": [
     "lint:eslint"

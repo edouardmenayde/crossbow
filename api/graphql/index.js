@@ -4,9 +4,9 @@ import jwt from '../utils/jwt';
 import findToken from '../utils/findToken';
 import getWetland from '../utils/getWetland';
 
-const patchRequest = (req, callback) => {
+const decodeToken = (req, callback) => {
   if (!req) {
-    return callback();
+    return callback(null);
   }
 
   const token = findToken(req);
@@ -14,38 +14,28 @@ const patchRequest = (req, callback) => {
   if (token) {
     return jwt.decode(token)
       .then(token => {
-        req.token = token;
-
-        callback();
+        callback(token);
       })
       .catch(error => callback(error));
   }
 
-  callback();
+  callback(null);
 };
 
 export default (query, variables, req) => {
   return new Promise(resolve => {
-    patchRequest(req, error => {
-      if (error) {
-        req.token = null;
-      }
-
+    decodeToken(req, (token) => {
       const wetland = getWetland();
 
-      req.getManager = () => wetland.getManager();
-
-      req.getRepository = (Entity) => wetland.getManager().getRepository(Entity);
-
-      req.wetland = wetland;
-
       return resolve(graphql(Schema, query, null, {
-        auth : {
-          isAuthenticated: !!req.token,
+        auth         : {
+          isAuthenticated: !!token,
           scope          : null
         },
-        token: req.token,
-        req
+        token,
+        wetland,
+        getManager   : () => wetland.getManager(),
+        getRepository: (Entity) => wetland.getManager().getRepository(Entity)
       }, variables));
     });
   });
