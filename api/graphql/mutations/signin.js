@@ -49,7 +49,7 @@ export default {
         return new Error('User could not be authenticated.');
       }
 
-      let isPasswordCorrect = bcrypt.compare(input.password, user.password);
+      let isPasswordCorrect = await bcrypt.compare(input.password, user.password);
 
       if (!isPasswordCorrect) {
         return new Error('User could not be authenticated.');
