@@ -22,7 +22,7 @@ describe.skip('Graphql::mutations::linkservice', () => {
     return token;
   };
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     //language=GraphQL
     const signupQuery = `
       mutation signup ($input: SignupInput!) {

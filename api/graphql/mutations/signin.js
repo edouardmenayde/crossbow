@@ -35,10 +35,8 @@ export default {
     }
   },
   type   : new GraphQLNonNull(SigninPayload),
-  resolve: async (_, {input}, context) => {
-    const {req} = context;
-
-    const manager        = req.getManager();
+  resolve: async (_, {input}, {getManager}) => {
+    const manager        = getManager();
     const User           = manager.getEntity('User');
     const UserRepository = manager.getRepository(User);
 

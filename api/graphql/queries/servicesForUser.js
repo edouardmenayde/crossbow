@@ -28,14 +28,11 @@ export default {
     }
   },
   description: "All service, containing whether it was link to one or multiple accounts, for the user",
-  resolve    : async (_, {}, context) => {
-    let {req}     = context;
-
-    if (!req.token) {
+  resolve    : async (_, {}, {token, wetland}) => {
+    if (!token) {
       throw Error('Not authorized.');
     }
 
-    const wetland           = req.wetland;
     const manager           = wetland.getManager();
     const ServiceRepository = manager.getRepository('Service');
 

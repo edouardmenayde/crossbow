@@ -31,9 +31,7 @@ export default {
     }
   },
   type       : SignupPayload,
-  resolve    : (root, {input}, context) => {
-    const {req}     = context;
-    const wetland   = req.wetland;
+  resolve    : (_, {input}, {wetland}) => {
     const manager   = wetland.getManager();
     const populator = wetland.getPopulator(manager);
     const User      = manager.getEntity('User');

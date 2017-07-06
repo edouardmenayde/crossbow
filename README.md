@@ -1,5 +1,7 @@
 # Serverless crossbow api
 
+[![Run Status](https://api.shippable.com/projects/595e100901ed240700b6a397/badge?branch=master)](https://app.shippable.com/github/edouardmenayde/crossbow)
+
 Tehnologies used :
 
 - Serverless

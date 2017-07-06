@@ -44,9 +44,7 @@ export default {
       type: new GraphQLNonNull(LinkServiceInput)
     }
   },
-  resolve    : withAuth(async (_, {input}, {req}) => {
-    const {wetland} = req;
-
+  resolve    : withAuth(async (_, {input}, {wetland, token}) => {
     const manager     = wetland.getManager();
     const populator   = wetland.getPopulator(manager);
     const ServiceLink = manager.getEntity('ServiceLink');
@@ -56,7 +54,7 @@ export default {
         return new Error('Service link update not implemented');
       }
 
-      input.user = req.token.user.id;
+      input.user = token.user.id;
 
       let serviceLink = populator.assign(ServiceLink, input);
 

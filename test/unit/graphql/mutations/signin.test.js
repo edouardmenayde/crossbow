@@ -8,7 +8,7 @@ describe('Graphql::mutations::signin', () => {
 
   const user = {username, password};
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     //language=GraphQL
     const query = `
       mutation signup ($input: SignupInput!){
