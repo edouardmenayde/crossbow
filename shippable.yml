@@ -1,0 +1,18 @@
+language: node_js
+
+node_js:
+  - 6.10.3
+  - 7.10.0
+
+services:
+  - mysql
+
+env:
+  - MYSQL_USER="shippable" MYSQL_DATABASE="crossbow_test"
+
+build:
+  ci:
+    - mysql -e "CREATE USER shippable@localhost IDENTIFIED BY ''; GRANT ALL ON *.* TO shippable@localhost; FLUSH PRIVILEGES;"
+    - mysql -e 'create database crossbow_test;'
+    - npm install
+    - npm test

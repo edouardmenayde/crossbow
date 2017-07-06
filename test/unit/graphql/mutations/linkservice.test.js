@@ -1,6 +1,6 @@
 import {request, requestWithPatching} from '../../../utils';
 
-describe('Graphql::mutations::linkservice', () => {
+describe.skip('Graphql::mutations::linkservice', () => {
 
   const username = 'Veil';
   const password = 'Simone';
@@ -71,6 +71,8 @@ describe('Graphql::mutations::linkservice', () => {
       }
     });
 
+    expect(results.errors).toBeUndefined();
+
     const serviceLink = results.data.linkService.serviceLink;
 
     expect(serviceLink.accessToken).toBe(accessToken);
@@ -81,5 +83,6 @@ describe('Graphql::mutations::linkservice', () => {
   /**
    * @TODO::implement
    */
-  test('Should re-link an existing service', () => {})
+  test('Should re-link an existing service', () => {
+  })
 });

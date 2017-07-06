@@ -52,7 +52,6 @@ export default {
     const ServiceLink = manager.getEntity('ServiceLink');
 
     try {
-
       if (input.serviceLink) {
         return new Error('Service link update not implemented');
       }

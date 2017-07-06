@@ -11,14 +11,14 @@ describe('Graphql::mutations::signin', () => {
   beforeEach(async () => {
     //language=GraphQL
     const query = `
-        mutation signup ($input: SignupInput!){
-            signup (input: $input) {
-                user {
-                    id,
-                    username
-                }
-            }
-        }`;
+      mutation signup ($input: SignupInput!){
+        signup (input: $input) {
+          user {
+            id,
+            username
+          }
+        }
+      }`;
 
     await request(query, {
       input: user
@@ -28,19 +28,21 @@ describe('Graphql::mutations::signin', () => {
   test('Should signin a user', async () => {
     //language=GraphQL
     const query = `
-        mutation signin ($input: SigninInput!) {
-            signin (input: $input) {
-                token,
-                user {
-                    id,
-                    username
-                }
-            }
-        }`;
+      mutation signin ($input: SigninInput!) {
+        signin (input: $input) {
+          token,
+          user {
+            id,
+            username
+          }
+        }
+      }`;
 
     const results = await requestWithPatching(query, {
       input: user
     });
+
+    expect(results.errors).toBeUndefined();
 
     expect(results.data.signin.token).toBeDefined();
 
