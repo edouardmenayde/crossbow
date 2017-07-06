@@ -5,6 +5,10 @@ import findToken from '../utils/findToken';
 import getWetland from '../utils/getWetland';
 
 const patchRequest = (req, callback) => {
+  if (!req) {
+    return callback();
+  }
+
   const token = findToken(req);
 
   if (token) {
@@ -21,10 +25,10 @@ const patchRequest = (req, callback) => {
 };
 
 export default (query, variables, req) => {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     patchRequest(req, error => {
       if (error) {
-        return reject(error);
+        req.token = null;
       }
 
       const wetland = getWetland();

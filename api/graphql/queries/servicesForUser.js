@@ -1,11 +1,11 @@
-import {GraphQLObjectType, GraphQLNonNull, GraphQLInputObjectType, GraphQLList, GraphQLID} from 'graphql';
+import {GraphQLObjectType, GraphQLNonNull, GraphQLInputObjectType, GraphQLList, GraphQLInt} from 'graphql';
 import Service from '../types/Service';
 
 const ServicesForUserInput = new GraphQLInputObjectType({
   name  : 'ServicesForUserInput',
   fields: () => ({
     userID: {
-      type: new GraphQLNonNull(GraphQLID)
+      type: new GraphQLNonNull(GraphQLInt)
     }
   })
 });
@@ -28,7 +28,7 @@ export default {
     }
   },
   description: "All service, containing whether it was link to one or multiple accounts, for the user",
-  resolve    : async (_, {input}, context) => {
+  resolve    : async (_, {}, context) => {
     let {req}     = context;
 
     if (!req.token) {

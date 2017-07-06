@@ -1,4 +1,4 @@
-import {GraphQLObjectType, GraphQLID, GraphQLString, GraphQLEnumType} from 'graphql';
+import {GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLEnumType} from 'graphql';
 import GraphQLDate                                                    from 'graphql-date';
 
 export const ServiceLinkType = new GraphQLEnumType({
@@ -23,7 +23,7 @@ export default new GraphQLObjectType({
 
     return {
       id          : {
-        type       : GraphQLID,
+        type       : GraphQLInt,
         description: 'ID of the service'
       },
       createdAt   : {
@@ -46,7 +46,7 @@ export default new GraphQLObjectType({
         description: 'Token used to get refresh the access token.'
       },
       expiresIn   : {
-        type       : GraphQLID,
+        type       : GraphQLInt,
         description: 'Integer representing the seconds before expiration of the access token.'
       },
       service     : {
