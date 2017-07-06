@@ -1,4 +1,4 @@
-import {GraphQLObjectType, GraphQLString, GraphQLID, GraphQLList} from 'graphql';
+import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList} from 'graphql';
 
 export default new GraphQLObjectType({
   name       : 'User',
@@ -8,7 +8,7 @@ export default new GraphQLObjectType({
 
     return {
       id      : {
-        type       : GraphQLID,
+        type       : GraphQLInt,
         description: 'ID of the user'
       },
       username: {

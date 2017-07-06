@@ -21,9 +21,9 @@
     "lint:eslint": "eslint .",
     "lint:eslint:fix": "eslint . --fix",
     "lint:staged": "lint-staged",
-    "test": "NODE_ENV=test jest",
-    "test:watch": "NODE_ENV=test jest --watch",
-    "test:coverage": "npm test -- --coverage --collectCoverageFrom 'app/**/*.js' --collectCoverageFrom 'graphql/**/*.js'"
+    "test": "NODE_ENV=test jest --forceExit",
+    "test:watch": "NODE_ENV=test jest --watch  --forceExit",
+    "test:coverage": "npm test -- --coverage --collectCoverageFrom 'api/lib/*.js' --collectCoverageFrom 'api/graphql/**/*.js' --collectCoverageFrom 'api/utils/*js'"
   },
   "pre-commit": ["lint:eslint"],
   "devDependencies": {
@@ -54,10 +54,14 @@
     "wetland": "^2.2.0"
   },
   "jest": {
-    "moduleNameMapper": {
-      "^.+\\.(jpg|png|gif|eot|svg|ttf|woff|woff2|mp4|webm)$": "<rootDir>/foundation/jest/fileMock.js",
-      "^.+\\.css$": "<rootDir>/foundation/jest/cssMock.js"
-    }
+    "testEnvironment": "node",
+    "testPathIgnorePatterns": [
+      "/node_modules/"
+    ],
+    "coverageReporters": [
+      "lcov",
+      "html"
+    ]
   },
   "dependencies": {}
 }

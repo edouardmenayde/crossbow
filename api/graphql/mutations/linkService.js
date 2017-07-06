@@ -1,4 +1,4 @@
-import {GraphQLInputObjectType, GraphQLObjectType, GraphQLNonNull, GraphQLString, GraphQLID, GraphQLInt} from 'graphql';
+import {GraphQLInputObjectType, GraphQLObjectType, GraphQLNonNull, GraphQLString, GraphQLInt} from 'graphql';
 import ServiceLink                                            from '../types/ServiceLink';
 import withAuth from '../../lib/auth';
 
@@ -6,13 +6,10 @@ const LinkServiceInput = new GraphQLInputObjectType({
   name  : 'LinkServiceInput',
   fields: {
     serviceLink : {
-      type: GraphQLID
-    },
-    user        : {
-      type: new GraphQLNonNull(GraphQLID)
+      type: GraphQLInt
     },
     service     : {
-      type: new GraphQLNonNull(GraphQLID)
+      type: new GraphQLNonNull(GraphQLInt)
     },
     type        : {
       type: GraphQLString
@@ -47,8 +44,7 @@ export default {
       type: new GraphQLNonNull(LinkServiceInput)
     }
   },
-  resolve    : withAuth(async (_, {input}, context) => {
-    const {req}     = context;
+  resolve    : withAuth(async (_, {input}, {req}) => {
     const {wetland} = req;
 
     const manager     = wetland.getManager();
@@ -60,6 +56,8 @@ export default {
       if (input.serviceLink) {
         return new Error('Service link update not implemented');
       }
+
+      input.user = req.token.user.id;
 
       let serviceLink = populator.assign(ServiceLink, input);
 
