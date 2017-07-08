@@ -36,7 +36,9 @@ export default {
     const manager           = wetland.getManager();
     const ServiceRepository = manager.getRepository('Service');
 
-    let services = await ServiceRepository.find();
+    let services = await ServiceRepository.findForUserWithLinks({
+      userID: token.user.id
+    });
 
     return {services};
   }

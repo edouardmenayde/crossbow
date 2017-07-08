@@ -25,8 +25,18 @@ export default class ServiceLink {
     });
 
     // Relations
-    mapping.forProperty('service').manyToOne({targetEntity: 'Service', inversedBy: 'links'});
-    mapping.forProperty('user').manyToOne({targetEntity: 'User', mappedBy: 'serviceLinks'});
+    mapping.forProperty('service')
+      .manyToOne({targetEntity: 'Service', inversedBy: 'links'})
+      .joinColumn({
+        onDelete: 'cascade',
+        nullable: false
+      });
+    mapping.forProperty('user')
+      .manyToOne({targetEntity: 'User', mappedBy: 'serviceLinks'})
+      .joinColumn({
+        onDelete: 'cascade',
+        nullable: false
+      });
   }
 
   beforeCreate() {

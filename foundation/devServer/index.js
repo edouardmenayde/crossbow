@@ -2,40 +2,45 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import graphQLHandler from '../../api/graphql/index';
 import cors from 'cors';
+import getWetland from '../../api/utils/getWetland';
 
 const APP_PORT = 3000;
 const app      = express();
 
-app.use(cors());
+(async () => {
+  await getWetland().getMigrator().devMigrations();
 
-app.use(bodyParser.json());
+  app.use(cors());
 
-app.use((req, res, next) => {
-  console.log(new Date(), req.method, req.url);
-  next();
-});
+  app.use(bodyParser.json());
 
-app.post('/graphql', async (req, res) => {
-  try {
-    const result = await graphQLHandler(req.body.query, req.body.variables, req);
+  app.use((req, res, next) => {
+    console.log(new Date(), req.method, req.url);
+    next();
+  });
 
-    if (result && result.errors) {
-      console.error(result.errors);
+  app.post('/graphql', async (req, res) => {
+    try {
+      const result = await graphQLHandler(req.body.query, req.body.variables, req);
+
+      if (result && result.errors) {
+        console.error(result.errors);
+      }
+
+      res.setHeader('Content-Type', 'application/json; charset=utf-8');
+      res.end(JSON.stringify(result, null, 2));
+    }
+    catch (error) {
+      console.error(error);
+      res.send(error);
+    }
+  });
+
+  app.listen(APP_PORT, (error) => {
+    if (error) {
+      return console.log(error);
     }
 
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    res.end(JSON.stringify(result, null, 2));
-  }
-  catch (error) {
-    console.error(error);
-    res.send(error);
-  }
-});
-
-app.listen(APP_PORT, (error) => {
-  if (error) {
-    return console.log(error);
-  }
-
-  console.log(`App is now running on http://localhost:${APP_PORT}`);
-});
+    console.log(`App is now running on http://localhost:${APP_PORT}`);
+  });
+})();

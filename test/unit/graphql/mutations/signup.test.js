@@ -8,7 +8,9 @@ describe('Graphql::mutations::signup', () => {
         signup (input: $input) {
           user {
             id,
-            username
+            username,
+            createdAt,
+            updatedAt
           }
         }
       }`;
@@ -27,6 +29,15 @@ describe('Graphql::mutations::signup', () => {
       username,
       id: expect.any(Number)
     });
+
+    let createdAt = user.createdAt;
+    let updatedAt = user.updatedAt;
+
+    expect(createdAt).toBeDefined();
+    expect(updatedAt).toBeDefined();
+
+    expect(() => new Date(createdAt)).not.toThrow();
+    expect(() => new Date(updatedAt)).not.toThrow();
   });
 
   test('Should fail when asked for password', async () => {

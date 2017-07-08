@@ -11,6 +11,12 @@ export default class User extends Entity {
     mapping.forProperty('id').increments().primary();
 
     // Fields
+    mapping.forProperty('createdAt').field({
+      type: 'datetime'
+    });
+    mapping.forProperty('updatedAt').field({
+      type: 'datetime'
+    });
     mapping.forProperty('username').field({type: 'string'});
     mapping.forProperty('password').field({type: 'string'});
 
@@ -24,6 +30,8 @@ export default class User extends Entity {
    * @returns {Promise}
    */
   beforeCreate() {
+    this.createdAt = this.updatedAt = new Date();
+
     return bcrypt.hash(this.password)
       .then(hash => {
         this.password = hash;
@@ -38,6 +46,8 @@ export default class User extends Entity {
    * @returns {*}
    */
   beforeUpdate(values) {
+    this.updatedAt = new Date();
+
     if (values.password === '') {
       throw Error('Password cannot be empty.');
     }
