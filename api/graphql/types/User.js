@@ -1,4 +1,5 @@
 import {GraphQLObjectType, GraphQLString, GraphQLInt, GraphQLList} from 'graphql';
+import GraphQLDate                                                    from 'graphql-date';
 
 export default new GraphQLObjectType({
   name       : 'User',
@@ -7,15 +8,23 @@ export default new GraphQLObjectType({
     const ServiceLink = require('./ServiceLink').default;
 
     return {
-      id      : {
+      id       : {
         type       : GraphQLInt,
         description: 'ID of the user'
       },
-      username: {
+      username : {
         type       : GraphQLString,
         description: 'Name of the user'
       },
-      links   : {
+      createdAt: {
+        type       : GraphQLDate,
+        description: 'Date at which service was first linked.'
+      },
+      updatedAt: {
+        type       : GraphQLDate,
+        description: 'Date at which service link was first updated.'
+      },
+      links    : {
         type: new GraphQLList(ServiceLink)
       }
     };

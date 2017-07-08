@@ -15,7 +15,9 @@ describe('Graphql::mutations::signin', () => {
         signup (input: $input) {
           user {
             id,
-            username
+            username,
+            createdAt,
+            updatedAt
           }
         }
       }`;
@@ -33,7 +35,9 @@ describe('Graphql::mutations::signin', () => {
           token,
           user {
             id,
-            username
+            username,
+            createdAt,
+            updatedAt
           }
         }
       }`;
@@ -56,5 +60,14 @@ describe('Graphql::mutations::signin', () => {
       username: results.data.signin.user.username,
       id      : expect.any(Number)
     });
+
+    let createdAt = results.data.signin.user.createdAt;
+    let updatedAt = results.data.signin.user.updatedAt;
+
+    expect(createdAt).toBeDefined();
+    expect(updatedAt).toBeDefined();
+
+    expect(() => new Date(createdAt)).not.toThrow();
+    expect(() => new Date(updatedAt)).not.toThrow();
   });
 });
