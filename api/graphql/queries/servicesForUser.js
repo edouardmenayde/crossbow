@@ -1,5 +1,6 @@
 import {GraphQLObjectType, GraphQLNonNull, GraphQLInputObjectType, GraphQLList, GraphQLInt} from 'graphql';
 import Service from '../types/Service';
+import withAuth from '../../lib/auth';
 
 const ServicesForUserInput = new GraphQLInputObjectType({
   name  : 'ServicesForUserInput',
@@ -28,11 +29,7 @@ export default {
     }
   },
   description: "All service, containing whether it was link to one or multiple accounts, for the user",
-  resolve    : async (_, {}, {token, wetland}) => {
-    if (!token) {
-      throw Error('Not authorized.');
-    }
-
+  resolve    : withAuth(async (_, {}, {token, wetland}) => {
     const manager           = wetland.getManager();
     const ServiceRepository = manager.getRepository('Service');
 
@@ -41,5 +38,5 @@ export default {
     });
 
     return {services};
-  }
+  })
 };
