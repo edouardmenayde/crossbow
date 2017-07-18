@@ -71,5 +71,7 @@
       "api/utils/*js"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "@rdcl/nonce": "^1.0.1"
+  }
 }

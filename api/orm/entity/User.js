@@ -22,6 +22,8 @@ export default class User extends Entity {
 
     // Relations
     mapping.forProperty('serviceLinks').oneToMany({targetEntity: 'ServiceLink', inversedBy: 'user'});
+    mapping.forProperty('memberships').oneToMany({targetEntity: 'Membership', inversedBy: 'user'});
+    mapping.forProperty('teamInvites').oneToMany({targetEntity: 'TeamInvite', inversedBy: 'team'});
   }
 
   /**
