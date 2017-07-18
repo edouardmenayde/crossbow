@@ -27,7 +27,7 @@ describe('Graphql::mutations::signup', () => {
 
     expect(user).toMatchObject({
       username,
-      id: expect.any(Number)
+      id: expect.any(Number),
     });
 
     let createdAt = user.createdAt;

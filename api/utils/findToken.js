@@ -12,7 +12,7 @@ export default function findToken(req) {
   if (parts.length !== 2) {
     throw {
       error  : 'invalid_token',
-      details: 'Format is Authorization: Bearer [token]'
+      details: 'Format is Authorization: Bearer [token]',
     };
   }
 

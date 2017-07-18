@@ -11,34 +11,34 @@ export default new GraphQLObjectType({
     return {
       id       : {
         type       : GraphQLInt,
-        description: 'ID of the invite'
+        description: 'ID of the invite',
       },
       createdAt: {
         type       : GraphQLDate,
-        description: 'Date at which service was first linked.'
+        description: 'Date at which service was first linked.',
       },
       updatedAt: {
         type       : GraphQLDate,
-        description: 'Date at which service link was first updated.'
+        description: 'Date at which service link was first updated.',
       },
       token    : {
         type       : GraphQLString,
-        description: 'Unique and (preferrably) hard to guess token used to identify the invite'
+        description: 'Unique and (preferrably) hard to guess token used to identify the invite',
       },
       uses     : {
         type       : GraphQLInt,
-        description: 'Uses'
+        description: 'Uses',
       },
       expiresIn: {
         type       : GraphQLInt,
-        description: 'Expiration of the token in seconds.'
+        description: 'Expiration of the token in seconds.',
       },
       team     : {
-        type: Team
+        type: Team,
       },
       requestor: {
-        type: User
-      }
+        type: User,
+      },
     };
-  }
+  },
 });

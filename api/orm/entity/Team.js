@@ -5,14 +5,14 @@ export default class Team {
 
     // Fields
     mapping.forProperty('createdAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('updatedAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('name').field({
       type    : 'string',
-      nullable: true
+      nullable: true,
     });
 
     // Relations

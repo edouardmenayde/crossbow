@@ -6,6 +6,6 @@ export default new GraphQLObjectType({
   name  : 'Query',
   fields: () => ({
     servicesForUser,
-    services
-  })
+    services,
+  }),
 });

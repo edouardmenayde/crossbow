@@ -16,18 +16,18 @@ const input = new GraphQLInputObjectType({
   fields: () => ({
     team: {
       type       : new GraphQLNonNull(GraphQLInt),
-      description: 'Team id.'
-    }
-  })
+      description: 'Team id.',
+    },
+  }),
 });
 
 const payload = new GraphQLObjectType({
   name  : NAME + 'Payload',
   fields: () => ({
     teamInvite: {
-      type: TeamInvite
-    }
-  })
+      type: TeamInvite,
+    },
+  }),
 });
 
 export default {
@@ -36,11 +36,11 @@ export default {
   type       : new GraphQLNonNull(payload),
   args       : {
     input: {
-      type: new GraphQLNonNull(input)
-    }
+      type: new GraphQLNonNull(input),
+    },
   },
   /**
    * @withAuth
    */
-  resolve    : withAuth(teamInviteService.create)
+  resolve    : withAuth(teamInviteService.create),
 };

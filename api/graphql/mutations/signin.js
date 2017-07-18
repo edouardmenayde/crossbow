@@ -7,32 +7,32 @@ const SigninInput = new GraphQLInputObjectType({
   name  : 'SigninInput',
   fields: {
     username: {
-      type: new GraphQLNonNull(GraphQLString)
+      type: new GraphQLNonNull(GraphQLString),
     },
     password: {
-      type: new GraphQLNonNull(GraphQLString)
-    }
-  }
+      type: new GraphQLNonNull(GraphQLString),
+    },
+  },
 });
 
 const SigninPayload = new GraphQLObjectType({
   name  : 'SigninPayload',
   fields: {
     token: {
-      type: new GraphQLNonNull(GraphQLString)
+      type: new GraphQLNonNull(GraphQLString),
     },
     user : {
-      type: User
-    }
-  }
+      type: User,
+    },
+  },
 });
 
 export default {
   name   : 'Signin',
   args   : {
     input: {
-      type: new GraphQLNonNull(SigninInput)
-    }
+      type: new GraphQLNonNull(SigninInput),
+    },
   },
   type   : new GraphQLNonNull(SigninPayload),
   resolve: async (_, {input}, {getManager}) => {
@@ -55,11 +55,11 @@ export default {
 
       return {
         token: await jwt.encode({user}),
-        user
+        user,
       };
     }
     catch (error) {
       throw error;
     }
-  }
+  },
 };

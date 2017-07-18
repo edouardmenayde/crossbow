@@ -26,11 +26,11 @@ const signupQuery = `
 export const getToken = async () => {
   const newUser = {
     username: 'TestUser',
-    password: '123456789'
+    password: '123456789',
   };
 
   await request(signupQuery, {
-    input: newUser
+    input: newUser,
   });
 
   const {data: {signin: {token}}} = await request(signinQuery, {input: newUser});

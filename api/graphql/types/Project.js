@@ -11,26 +11,26 @@ export default new GraphQLObjectType({
     return {
       id      : {
         type       : GraphQLInt,
-        description: 'ID of the project'
+        description: 'ID of the project',
       },
       createdAt: {
         type       : GraphQLDate,
-        description: 'Date at which project was created.'
+        description: 'Date at which project was created.',
       },
       updatedAt: {
         type       : GraphQLDate,
-        description: 'Date at which project was last updated.'
+        description: 'Date at which project was last updated.',
       },
       name    : {
         type       : GraphQLString,
-        description: 'Name of the service'
+        description: 'Name of the service',
       },
       team    : {
-        type: Team
+        type: Team,
       },
       services: {
-        type: new GraphQLList(Service)
-      }
+        type: new GraphQLList(Service),
+      },
     };
-  }
+  },
 });

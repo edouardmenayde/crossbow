@@ -6,18 +6,18 @@ const ServicesForUserInput = new GraphQLInputObjectType({
   name  : 'ServicesForUserInput',
   fields: () => ({
     userID: {
-      type: new GraphQLNonNull(GraphQLInt)
-    }
-  })
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+  }),
 });
 
 const ServicesForUserPayload = new GraphQLObjectType({
   name  : 'ServicesForUserPayload',
   fields: () => ({
     services: {
-      type: new GraphQLList(Service)
-    }
-  })
+      type: new GraphQLList(Service),
+    },
+  }),
 });
 
 
@@ -25,8 +25,8 @@ export default {
   type       : ServicesForUserPayload,
   args       : {
     input: {
-      type: ServicesForUserInput
-    }
+      type: ServicesForUserInput,
+    },
   },
   description: "All service, containing whether it was link to one or multiple accounts, for the user",
   resolve    : withAuth(async (_, {}, {token, wetland}) => {
@@ -34,9 +34,9 @@ export default {
     const ServiceRepository = manager.getRepository('Service');
 
     let services = await ServiceRepository.findForUserWithLinks({
-      userID: token.user.id
+      userID: token.user.id,
     });
 
     return {services};
-  })
+  }),
 };

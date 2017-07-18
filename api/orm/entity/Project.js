@@ -5,10 +5,10 @@ export default class Project {
 
     // Fields
     mapping.forProperty('createdAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('updatedAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('name').field({type: 'string'});
 

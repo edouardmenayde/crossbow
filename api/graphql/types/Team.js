@@ -10,18 +10,18 @@ export default new GraphQLObjectType({
     return {
       id      : {
         type       : GraphQLInt,
-        description: 'ID of the project'
+        description: 'ID of the project',
       },
       name    : {
         type       : GraphQLString,
-        description: 'Name of the project'
+        description: 'Name of the project',
       },
       projects: {
-        type: new GraphQLList(Project)
+        type: new GraphQLList(Project),
       },
       members : {
-        type: new GraphQLList(Membership)
-      }
+        type: new GraphQLList(Membership),
+      },
     };
-  }
+  },
 });

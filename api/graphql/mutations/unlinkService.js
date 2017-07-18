@@ -6,18 +6,18 @@ const UnlinkServiceInput = new GraphQLInputObjectType({
   name  : 'UnlinkServiceInput',
   fields: {
     serviceLink: {
-      type: new GraphQLNonNull(GraphQLInt)
-    }
-  }
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+  },
 });
 
 const UnlinkServicePayload = new GraphQLObjectType({
   name  : 'UnlinkServicePayload',
   fields: {
     serviceLink: {
-      type: ServiceLink
-    }
-  }
+      type: ServiceLink,
+    },
+  },
 });
 
 export default {
@@ -26,8 +26,8 @@ export default {
   type       : new GraphQLNonNull(UnlinkServicePayload),
   args       : {
     input: {
-      type: new GraphQLNonNull(UnlinkServiceInput)
-    }
+      type: new GraphQLNonNull(UnlinkServiceInput),
+    },
   },
   resolve    : withAuth(async (_, {input}, {wetland}) => {
     const manager               = wetland.getManager();
@@ -47,5 +47,5 @@ export default {
     catch (error) {
       throw error;
     }
-  })
+  }),
 };

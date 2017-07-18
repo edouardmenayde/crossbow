@@ -26,12 +26,12 @@ describe('Graphql::mutations::createTeamInvite', () => {
 
     return request(query, {
       input: {
-        name: projectName
-      }
+        name: projectName,
+      },
     }, {
       headers: {
-        authorization: `Bearer ${token}`
-      }
+        authorization: `Bearer ${token}`,
+      },
     });
   };
 
@@ -56,12 +56,12 @@ describe('Graphql::mutations::createTeamInvite', () => {
 
     const results = await requestWithPatching(query, {
       input: {
-        team: team.id
-      }
+        team: team.id,
+      },
     }, {
       headers: {
-        authorization: `Bearer ${token}`
-      }
+        authorization: `Bearer ${token}`,
+      },
     });
 
     expect(results.error).toBeUndefined();
@@ -73,8 +73,8 @@ describe('Graphql::mutations::createTeamInvite', () => {
         id       : expect.any(Number),
         token    : expect.any(String),
         expiresIn: expect.any(Number),
-        uses     : 0
-      }
+        uses     : 0,
+      },
     });
 
     expect(createTeamInvite.teamInvite.expiresIn).toBeGreaterThanOrEqual(-1);

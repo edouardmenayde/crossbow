@@ -14,17 +14,17 @@ const wetland = {
         connectionLimit   : process.env.DB_CONNECTIONS || 5,
         pool              : true,
         waitForConnections: true,
-        charset           : 'utf8'
-      }
-    }
-  }
+        charset           : 'utf8',
+      },
+    },
+  },
 };
 
 if (process.env.NODE_ENV === 'production') {
   wetland.stores.defaultStore.ssl = {
     keys: fs.readFileSync(__dirname + '/mysql-ca.pem', 'ascii'),
     cert: fs.readFileSync(__dirname + '/mysql-ca.pem', 'ascii'),
-    ca  : fs.readFileSync(__dirname + '/mysql-ca.pem', 'ascii')
+    ca  : fs.readFileSync(__dirname + '/mysql-ca.pem', 'ascii'),
   };
 }
 

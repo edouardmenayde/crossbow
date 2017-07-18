@@ -35,7 +35,7 @@ describe.skip('Graphql::mutations::linkservice', () => {
       }`;
 
     await request(signupQuery, {
-      input: user
+      input: user,
     });
   });
 
@@ -64,12 +64,12 @@ describe.skip('Graphql::mutations::linkservice', () => {
       input: {
         service: 1,
         type   : 'oauth1',
-        accessToken
-      }
+        accessToken,
+      },
     }, {
       headers: {
-        authorization: `Bearer ${token}`
-      }
+        authorization: `Bearer ${token}`,
+      },
     });
 
     expect(results.errors).toBeUndefined();

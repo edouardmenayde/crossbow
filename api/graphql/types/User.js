@@ -12,29 +12,29 @@ export default new GraphQLObjectType({
     return {
       id         : {
         type       : GraphQLInt,
-        description: 'ID of the user'
+        description: 'ID of the user',
       },
       username   : {
         type       : GraphQLString,
-        description: 'Name of the user'
+        description: 'Name of the user',
       },
       createdAt  : {
         type       : GraphQLDate,
-        description: 'Date at which service was first linked.'
+        description: 'Date at which service was first linked.',
       },
       updatedAt  : {
         type       : GraphQLDate,
-        description: 'Date at which service link was first updated.'
+        description: 'Date at which service link was first updated.',
       },
       teamInvites: {
-        type: new GraphQLList(TeamInvite)
+        type: new GraphQLList(TeamInvite),
       },
       links      : {
-        type: new GraphQLList(ServiceLink)
+        type: new GraphQLList(ServiceLink),
       },
       memberships: {
-        type: new GraphQLList(Membership)
-      }
+        type: new GraphQLList(Membership),
+      },
     };
-  }
+  },
 });

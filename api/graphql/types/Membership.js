@@ -10,14 +10,14 @@ export default new GraphQLObjectType({
     return {
       id  : {
         type       : GraphQLInt,
-        description: 'ID of the membership'
+        description: 'ID of the membership',
       },
       user: {
-        type: User
+        type: User,
       },
       team: {
-        type: Team
-      }
+        type: Team,
+      },
     };
-  }
+  },
 });

@@ -5,9 +5,9 @@ const handle = require('./graphql/index').default; // eslint-disable-line import
 const createResponse = (statusCode, body) => ({
   statusCode,
   headers: {
-    'Access-Control-Allow-Origin': '*' // Required for CORS
+    'Access-Control-Allow-Origin': '*', // Required for CORS
   },
-  body   : JSON.stringify(body)
+  body   : JSON.stringify(body),
 });
 
 module.exports.graphql = (event, context, callback) => {

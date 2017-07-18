@@ -30,12 +30,12 @@ export default (query, variables, req) => {
       return resolve(graphql(Schema, query, null, {
         auth         : {
           isAuthenticated: !!token,
-          scope          : null
+          scope          : null,
         },
         token,
         wetland,
         getManager   : () => wetland.getManager(),
-        getRepository: (Entity) => wetland.getManager().getRepository(Entity)
+        getRepository: (Entity) => wetland.getManager().getRepository(Entity),
       }, variables));
     });
   });

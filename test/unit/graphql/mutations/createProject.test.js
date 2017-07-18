@@ -28,12 +28,12 @@ describe('Graphql::mutations::createProject', () => {
 
     const results = await requestWithPatching(query, {
       input: {
-        name: projectName
-      }
+        name: projectName,
+      },
     }, {
       headers: {
-        authorization: `Bearer ${token}`
-      }
+        authorization: `Bearer ${token}`,
+      },
     });
 
     expect(results.errors).toBeUndefined();
@@ -41,15 +41,15 @@ describe('Graphql::mutations::createProject', () => {
     expect(results.data.createProject).toMatchObject({
       project   : {
         id  : expect.any(Number),
-        name: projectName
+        name: projectName,
       },
       team      : {
         id  : expect.any(Number),
-        name: null
+        name: null,
       },
       membership: {
-        id: expect.any(Number)
-      }
+        id: expect.any(Number),
+      },
     });
 
   });

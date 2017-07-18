@@ -10,22 +10,22 @@ export default new GraphQLObjectType({
     return {
       id      : {
         type       : GraphQLInt,
-        description: 'ID of the service'
+        description: 'ID of the service',
       },
       name    : {
         type       : GraphQLString,
-        description: 'Name of the service'
+        description: 'Name of the service',
       },
       tag     : {
         type       : GraphQLString,
-        description: 'Unique tag of the service'
+        description: 'Unique tag of the service',
       },
       links   : {
-        type: new GraphQLList(ServiceLink)
+        type: new GraphQLList(ServiceLink),
       },
       projects: {
-        type: new GraphQLList(Project)
-      }
+        type: new GraphQLList(Project),
+      },
     };
-  }
+  },
 });

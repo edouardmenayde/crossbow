@@ -8,18 +8,18 @@ const input = new GraphQLInputObjectType({
   name  : NAME+ 'Input',
   fields: () => ({
     userID: {
-      type: new GraphQLNonNull(GraphQLInt)
-    }
-  })
+      type: new GraphQLNonNull(GraphQLInt),
+    },
+  }),
 });
 
 const payload = new GraphQLObjectType({
   name  : NAME + 'Payload',
   fields: () => ({
     services: {
-      type: new GraphQLList(Service)
-    }
-  })
+      type: new GraphQLList(Service),
+    },
+  }),
 });
 
 
@@ -27,8 +27,8 @@ export default {
   type       : payload,
   args       : {
     input: {
-      type: input
-    }
+      type: input,
+    },
   },
   description: 'All service, containing whether it was link to one or multiple accounts, for the user',
   resolve    : withAuth(async (_, {}, {wetland}) => {
@@ -38,5 +38,5 @@ export default {
     let services = await ServiceRepository.find();
 
     return {services};
-  })
+  }),
 };

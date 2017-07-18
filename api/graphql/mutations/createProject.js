@@ -18,28 +18,28 @@ const input = new GraphQLInputObjectType({
   fields: () => ({
     name    : {
       type       : new GraphQLNonNull(GraphQLString),
-      description: 'Name of the future team.'
+      description: 'Name of the future team.',
     },
     services: {
       type       : new GraphQLList(GraphQLInt),
-      description: 'List of services you want to add to the project'
-    }
-  })
+      description: 'List of services you want to add to the project',
+    },
+  }),
 });
 
 const payload = new GraphQLObjectType({
   name  : NAME + 'Payload',
   fields: () => ({
     project   : {
-      type: Project
+      type: Project,
     },
     membership: {
-      type: Membership
+      type: Membership,
     },
     team      : {
-      type: Team
-    }
-  })
+      type: Team,
+    },
+  }),
 });
 
 export default {
@@ -48,8 +48,8 @@ export default {
   type       : new GraphQLNonNull(payload),
   args       : {
     input: {
-      type: new GraphQLNonNull(input)
-    }
+      type: new GraphQLNonNull(input),
+    },
   },
   /**
    * @withAuth
@@ -77,14 +77,14 @@ export default {
 
       let membership = populator.assign(Membership, {
         user: token.user.id,
-        team: team.id
+        team: team.id,
       });
 
       await manager.persist(membership).flush();
 
       let project = populator.assign(Project, {
         team: team.id,
-        ...input
+        ...input,
       });
 
       await manager.persist(project).flush();
@@ -92,12 +92,12 @@ export default {
       return {
         project,
         membership,
-        team
+        team,
       };
     }
     catch (error) {
       console.error(error);
       throw error;
     }
-  })
+  }),
 };

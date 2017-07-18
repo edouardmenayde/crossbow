@@ -14,10 +14,10 @@ export default class TeamInvite extends Entity {
 
     // Fields
     mapping.forProperty('createdAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('updatedAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('token').field({type: 'string'});
     mapping.forProperty('expiresIn').field({type: 'integer'});
