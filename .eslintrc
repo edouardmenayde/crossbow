@@ -25,7 +25,7 @@
     "no-console": 0,
     "no-empty-pattern": 0,
     "no-cond-assign": 1,
-    "camelcase": 0,
+    "camelcase": 2,
     "comma-style": 2,
     "comma-dangle": [
       2,

@@ -7,7 +7,7 @@ export default class ServiceRepository extends EntityRepository {
     serviceQB
       .populate('s.links', null, 'sl')
       .select('sl')
-      .where({user_id: criteria.userID});
+      .where({user_id: criteria.userID}); // eslint-disable-line camelcase
 
     return serviceQB
       .select('s')
