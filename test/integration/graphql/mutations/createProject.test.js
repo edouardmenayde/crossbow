@@ -1,5 +1,4 @@
-import {requestWithPatching} from '../../../utils';
-import {getToken} from '../utils';
+import {requestWithPatching, getToken} from '../utils';
 
 describe('Graphql::mutations::createProject', () => {
 
@@ -29,7 +28,7 @@ describe('Graphql::mutations::createProject', () => {
     const results = await requestWithPatching(query, {
       input: {
         name: projectName,
-      },
+      } ,
     }, {
       headers: {
         authorization: `Bearer ${token}`,

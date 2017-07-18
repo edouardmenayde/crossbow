@@ -1,4 +1,4 @@
-import {request, requestWithPatching} from '../../../utils';
+import {request, requestWithPatching} from '../utils';
 
 describe.skip('Graphql::mutations::linkservice', () => {
 

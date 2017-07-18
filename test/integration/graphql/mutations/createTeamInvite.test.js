@@ -1,5 +1,4 @@
-import {request, requestWithPatching} from '../../../utils';
-import {getToken} from '../utils';
+import {request, requestWithPatching, getToken} from '../utils';
 
 describe('Graphql::mutations::createTeamInvite', () => {
 

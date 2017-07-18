@@ -1,4 +1,4 @@
-import {request, requestWithPatching} from '../../../utils';
+import {request, requestWithPatching} from '../utils';
 import jwt from '../../../../api/utils/jwt';
 
 describe('Graphql::mutations::signin', () => {

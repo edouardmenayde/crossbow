@@ -1,4 +1,4 @@
-import {request, requestWithPatching} from '../../../utils';
+import {request, requestWithPatching} from '../utils';
 
 describe('Graphql::mutations::signup', () => {
   test('Should create a user', async () => {
