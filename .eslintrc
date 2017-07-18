@@ -29,7 +29,7 @@
     "comma-style": 2,
     "comma-dangle": [
       2,
-      "never"
+      "only-multiline" // Permits adding a new line to an object without modifying the last
     ],
     "indent": [
       "error",
