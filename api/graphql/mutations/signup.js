@@ -5,21 +5,21 @@ const SignupInput = new GraphQLInputObjectType({
   name  : 'SignupInput',
   fields: {
     username: {
-      type: new GraphQLNonNull(GraphQLString)
+      type: new GraphQLNonNull(GraphQLString),
     },
     password: {
-      type: new GraphQLNonNull(GraphQLString)
-    }
-  }
+      type: new GraphQLNonNull(GraphQLString),
+    },
+  },
 });
 
 const SignupPayload = new GraphQLObjectType({
   name  : 'SignupPayload',
   fields: {
     user: {
-      type: User
-    }
-  }
+      type: User,
+    },
+  },
 });
 
 export default {
@@ -27,8 +27,8 @@ export default {
   description: 'Register a user',
   args       : {
     input: {
-      type: new GraphQLNonNull(SignupInput)
-    }
+      type: new GraphQLNonNull(SignupInput),
+    },
   },
   type       : SignupPayload,
   resolve    : (_, {input}, {wetland}) => {
@@ -43,5 +43,5 @@ export default {
       .then(() => {
         return {user};
       });
-  }
+  },
 };

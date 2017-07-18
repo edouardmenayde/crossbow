@@ -2,8 +2,10 @@ import {GraphQLObjectType, GraphQLNonNull, GraphQLInputObjectType, GraphQLList, 
 import Service from '../types/Service';
 import withAuth from '../../lib/auth';
 
-const ServicesForUserInput = new GraphQLInputObjectType({
-  name  : 'ServicesForUserInput',
+const NAME = 'Services';
+
+const input = new GraphQLInputObjectType({
+  name  : NAME+ 'Input',
   fields: () => ({
     userID: {
       type: new GraphQLNonNull(GraphQLInt),
@@ -11,8 +13,8 @@ const ServicesForUserInput = new GraphQLInputObjectType({
   }),
 });
 
-const ServicesForUserPayload = new GraphQLObjectType({
-  name  : 'ServicesForUserPayload',
+const payload = new GraphQLObjectType({
+  name  : NAME + 'Payload',
   fields: () => ({
     services: {
       type: new GraphQLList(Service),
@@ -22,20 +24,18 @@ const ServicesForUserPayload = new GraphQLObjectType({
 
 
 export default {
-  type       : ServicesForUserPayload,
+  type       : payload,
   args       : {
     input: {
-      type: ServicesForUserInput,
+      type: input,
     },
   },
-  description: "All service, containing whether it was link to one or multiple accounts, for the user",
-  resolve    : withAuth(async (_, {}, {token, wetland}) => {
+  description: 'All service, containing whether it was link to one or multiple accounts, for the user',
+  resolve    : withAuth(async (_, {}, {wetland}) => {
     const manager           = wetland.getManager();
     const ServiceRepository = manager.getRepository('Service');
 
-    let services = await ServiceRepository.findForUserWithLinks({
-      userID: token.user.id,
-    });
+    let services = await ServiceRepository.find();
 
     return {services};
   }),

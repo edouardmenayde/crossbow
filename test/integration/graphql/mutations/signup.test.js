@@ -1,4 +1,4 @@
-import {request, requestWithPatching} from '../../../utils';
+import {request, requestWithPatching} from '../utils';
 
 describe('Graphql::mutations::signup', () => {
   test('Should create a user', async () => {
@@ -27,7 +27,7 @@ describe('Graphql::mutations::signup', () => {
 
     expect(user).toMatchObject({
       username,
-      id: expect.any(Number)
+      id: expect.any(Number),
     });
 
     let createdAt = user.createdAt;

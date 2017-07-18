@@ -5,23 +5,23 @@ export default class ServiceLink {
 
     // Fields
     mapping.forProperty('createdAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('updatedAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('type').field({
       type       : 'enumeration',
-      enumeration: ['oauth1', 'oauth2']
+      enumeration: ['oauth1', 'oauth2'],
     });
     mapping.forProperty('accessToken').field({
-      type: 'string'
+      type: 'string',
     });
     mapping.forProperty('refreshToken').field({
-      type: 'string'
+      type: 'string',
     });
     mapping.forProperty('expiresIn').field({
-      type: 'integer'
+      type: 'integer',
     });
 
     // Relations
@@ -29,13 +29,13 @@ export default class ServiceLink {
       .manyToOne({targetEntity: 'Service', inversedBy: 'links'})
       .joinColumn({
         onDelete: 'cascade',
-        nullable: false
+        nullable: false,
       });
     mapping.forProperty('user')
       .manyToOne({targetEntity: 'User', mappedBy: 'serviceLinks'})
       .joinColumn({
         onDelete: 'cascade',
-        nullable: false
+        nullable: false,
       });
   }
 

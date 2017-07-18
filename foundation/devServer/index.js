@@ -8,7 +8,14 @@ const APP_PORT = 3000;
 const app      = express();
 
 (async () => {
-  await getWetland().getMigrator().devMigrations();
+
+  try {
+    await getWetland().getMigrator().devMigrations();
+    console.log('Ran migration');
+  }
+  catch (error) {
+    throw error;
+  }
 
   app.use(cors());
 

@@ -6,7 +6,7 @@ Tehnologies used :
 
 - Serverless
 - GraphQL-js
-- Apollo CLient
+- Apollo Client
 
 ## Install & Run
 

@@ -5,19 +5,27 @@ export default new GraphQLObjectType({
   description: 'Service link contain resources to create a unique instance of the service owned by a user.',
   fields     : () => {
     const ServiceLink = require('./ServiceLink').default;
+    const Project     = require('./Project').default;
 
     return {
-      id   : {
+      id      : {
         type       : GraphQLInt,
-        description: 'ID of the service'
+        description: 'ID of the service',
       },
-      name : {
+      name    : {
         type       : GraphQLString,
-        description: 'Name of the service'
+        description: 'Name of the service',
       },
-      links: {
-        type: new GraphQLList(ServiceLink)
-      }
+      tag     : {
+        type       : GraphQLString,
+        description: 'Unique tag of the service',
+      },
+      links   : {
+        type: new GraphQLList(ServiceLink),
+      },
+      projects: {
+        type: new GraphQLList(Project),
+      },
     };
-  }
+  },
 });

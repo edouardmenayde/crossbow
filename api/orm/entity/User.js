@@ -12,16 +12,18 @@ export default class User extends Entity {
 
     // Fields
     mapping.forProperty('createdAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('updatedAt').field({
-      type: 'datetime'
+      type: 'datetime',
     });
     mapping.forProperty('username').field({type: 'string'});
     mapping.forProperty('password').field({type: 'string'});
 
     // Relations
     mapping.forProperty('serviceLinks').oneToMany({targetEntity: 'ServiceLink', inversedBy: 'user'});
+    mapping.forProperty('memberships').oneToMany({targetEntity: 'Membership', inversedBy: 'user'});
+    mapping.forProperty('teamInvites').oneToMany({targetEntity: 'TeamInvite', inversedBy: 'team'});
   }
 
   /**

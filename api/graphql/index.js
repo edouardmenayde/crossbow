@@ -14,7 +14,7 @@ const decodeToken = (req, callback) => {
   if (token) {
     return jwt.decode(token)
       .then(token => {
-        callback(token);
+        callback(null, token);
       })
       .catch(error => callback(error));
   }
@@ -24,18 +24,18 @@ const decodeToken = (req, callback) => {
 
 export default (query, variables, req) => {
   return new Promise(resolve => {
-    decodeToken(req, (token) => {
+    decodeToken(req, (error, token) => {
       const wetland = getWetland();
 
       return resolve(graphql(Schema, query, null, {
         auth         : {
           isAuthenticated: !!token,
-          scope          : null
+          scope          : null,
         },
         token,
         wetland,
         getManager   : () => wetland.getManager(),
-        getRepository: (Entity) => wetland.getManager().getRepository(Entity)
+        getRepository: (Entity) => wetland.getManager().getRepository(Entity),
       }, variables));
     });
   });

@@ -5,44 +5,41 @@ import withAuth from '../../lib/auth';
 const LinkServiceInput = new GraphQLInputObjectType({
   name  : 'LinkServiceInput',
   fields: {
-    serviceLink : {
-      type: GraphQLInt
-    },
     service     : {
-      type: new GraphQLNonNull(GraphQLInt)
+      type: new GraphQLNonNull(GraphQLInt),
     },
     type        : {
-      type: GraphQLString
+      type: GraphQLString,
     },
     accessToken : {
-      type: GraphQLString
+      type: GraphQLString,
     },
     refreshToken: {
-      type: GraphQLString
+      type: GraphQLString,
     },
     expiresIn   : {
-      type: GraphQLInt
-    }
-  }
+      type: GraphQLInt,
+    },
+  },
 });
 
 const LinkServicePayload = new GraphQLObjectType({
   name  : 'LinkServicePayload',
   fields: {
     serviceLink: {
-      type: ServiceLink
-    }
-  }
+      type: ServiceLink,
+    },
+  },
 });
 
 export default {
   name       : 'LinkService',
-  description: 'Create or update a service link',
+  description: 'Create a service link',
   type       : new GraphQLNonNull(LinkServicePayload),
   args       : {
     input: {
-      type: new GraphQLNonNull(LinkServiceInput)
-    }
+      type: new GraphQLNonNull(LinkServiceInput),
+    },
   },
   resolve    : withAuth(async (_, {input}, {wetland, token}) => {
     const manager     = wetland.getManager();
@@ -50,10 +47,6 @@ export default {
     const ServiceLink = manager.getEntity('ServiceLink');
 
     try {
-      if (input.serviceLink) {
-        return new Error('Service link update not implemented');
-      }
-
       input.user = token.user.id;
 
       let serviceLink = populator.assign(ServiceLink, input);
@@ -65,5 +58,5 @@ export default {
     catch (error) {
       throw error;
     }
-  })
+  }),
 };

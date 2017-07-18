@@ -10,7 +10,10 @@ export default function findToken(req) {
   let parts = req.headers.authorization.split(' ');
 
   if (parts.length !== 2) {
-    throw {error: 'invalid_token', details: 'Format is Authorization: Bearer [token]'};
+    throw {
+      error  : 'invalid_token',
+      details: 'Format is Authorization: Bearer [token]',
+    };
   }
 
   let token;

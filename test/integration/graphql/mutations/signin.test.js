@@ -1,4 +1,4 @@
-import {request, requestWithPatching} from '../../../utils';
+import {request, requestWithPatching} from '../utils';
 import jwt from '../../../../api/utils/jwt';
 
 describe('Graphql::mutations::signin', () => {
@@ -23,7 +23,7 @@ describe('Graphql::mutations::signin', () => {
       }`;
 
     await request(query, {
-      input: user
+      input: user,
     });
   });
 
@@ -43,7 +43,7 @@ describe('Graphql::mutations::signin', () => {
       }`;
 
     const results = await requestWithPatching(query, {
-      input: user
+      input: user,
     });
 
     expect(results.errors).toBeUndefined();
@@ -54,11 +54,11 @@ describe('Graphql::mutations::signin', () => {
 
     expect(payload.user).toMatchObject({
       username,
-      id: expect.any(Number)
+      id: expect.any(Number),
     });
     expect(payload.user).toMatchObject({
       username: results.data.signin.user.username,
-      id      : expect.any(Number)
+      id      : expect.any(Number),
     });
 
     let createdAt = results.data.signin.user.createdAt;

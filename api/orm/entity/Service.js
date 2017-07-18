@@ -10,8 +10,14 @@ export default class Service {
 
     // Fields
     mapping.forProperty('name').field({type: 'string'});
+    mapping.forProperty('tag').field({type: 'string'});
+
+    // Constraints
+    mapping.uniqueConstraint('tag');
 
     // Relations
     mapping.forProperty('links').oneToMany({targetEntity: 'ServiceLink', mappedBy: 'service'});
+    mapping.forProperty('projects').manyToMany({targetEntity: 'Project', inversedBy: 'services'});
+
   }
 };

@@ -1,4 +1,4 @@
-import {request, requestWithPatching} from '../../../utils';
+import {request, requestWithPatching} from '../utils';
 
 describe.skip('Graphql::mutations::linkservice', () => {
 
@@ -35,7 +35,7 @@ describe.skip('Graphql::mutations::linkservice', () => {
       }`;
 
     await request(signupQuery, {
-      input: user
+      input: user,
     });
   });
 
@@ -47,6 +47,7 @@ describe.skip('Graphql::mutations::linkservice', () => {
       mutation linkService ($input: LinkServiceInput!) {
         linkService(input: $input) {
           serviceLink {
+            id,
             createdAt,
             updatedAt,
             type,
@@ -63,12 +64,12 @@ describe.skip('Graphql::mutations::linkservice', () => {
       input: {
         service: 1,
         type   : 'oauth1',
-        accessToken
-      }
+        accessToken,
+      },
     }, {
       headers: {
-        authorization: `Bearer ${token}`
-      }
+        authorization: `Bearer ${token}`,
+      },
     });
 
     expect(results.errors).toBeUndefined();
@@ -79,10 +80,4 @@ describe.skip('Graphql::mutations::linkservice', () => {
     expect(() => new Date(serviceLink.createdAt)).not.toThrow();
     expect(() => new Date(serviceLink.updatedAt)).not.toThrow();
   });
-
-  /**
-   * @TODO::implement
-   */
-  test('Should re-link an existing service', () => {
-  })
 });
