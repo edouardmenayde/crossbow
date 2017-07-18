@@ -47,6 +47,7 @@ describe.skip('Graphql::mutations::linkservice', () => {
       mutation linkService ($input: LinkServiceInput!) {
         linkService(input: $input) {
           serviceLink {
+            id,
             createdAt,
             updatedAt,
             type,
@@ -79,10 +80,4 @@ describe.skip('Graphql::mutations::linkservice', () => {
     expect(() => new Date(serviceLink.createdAt)).not.toThrow();
     expect(() => new Date(serviceLink.updatedAt)).not.toThrow();
   });
-
-  /**
-   * @TODO::implement
-   */
-  test('Should re-link an existing service', () => {
-  })
 });
