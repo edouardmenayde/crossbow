@@ -5,9 +5,6 @@ import withAuth from '../../lib/auth';
 const LinkServiceInput = new GraphQLInputObjectType({
   name  : 'LinkServiceInput',
   fields: {
-    serviceLink : {
-      type: GraphQLInt
-    },
     service     : {
       type: new GraphQLNonNull(GraphQLInt)
     },
@@ -37,7 +34,7 @@ const LinkServicePayload = new GraphQLObjectType({
 
 export default {
   name       : 'LinkService',
-  description: 'Create or update a service link',
+  description: 'Create a service link',
   type       : new GraphQLNonNull(LinkServicePayload),
   args       : {
     input: {
@@ -50,10 +47,6 @@ export default {
     const ServiceLink = manager.getEntity('ServiceLink');
 
     try {
-      if (input.serviceLink) {
-        return new Error('Service link update not implemented');
-      }
-
       input.user = token.user.id;
 
       let serviceLink = populator.assign(ServiceLink, input);
