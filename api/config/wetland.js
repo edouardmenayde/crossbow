@@ -13,7 +13,8 @@ const wetland = {
         database          : process.env.MYSQL_DATABASE || 'crossbow',
         connectionLimit   : process.env.DB_CONNECTIONS || 5,
         pool              : true,
-        waitForConnections: true
+        waitForConnections: true,
+        charset           : 'utf8'
       }
     }
   }
