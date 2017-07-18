@@ -21,7 +21,7 @@
     "lint:eslint": "eslint .",
     "lint:eslint:fix": "eslint . --fix",
     "lint:staged": "lint-staged",
-    "test": "npm run migrate:dev && NODE_ENV=test jest --forceExit",
+    "test": "npm run migrate:dev && NODE_ENV=test jest --coverage --forceExit",
     "test:watch": "npm run migrate:dev && NODE_ENV=test jest --watch  --forceExit",
     "test:coverage": "npm test -- --coverage",
     "migrate:dev": "NODE_ENV=test babel-node test/setup"
@@ -30,6 +30,7 @@
     "lint:eslint"
   ],
   "devDependencies": {
+    "@rdcl/nonce": "^1.0.1",
     "babel-cli": "^6.24.1",
     "babel-core": "^6.17.0",
     "babel-eslint": "^7.0.0",
@@ -49,16 +50,21 @@
     "graphql": "^0.9.1",
     "graphql-date": "^1.0.3",
     "jest-cli": "^19.0.0",
+    "jest-junit": "^2.1.0",
     "jsonwebtoken": "^7.1.9",
     "lint-staged": "^3.0.3",
     "mysql": "^2.13.0",
     "nodemon": "^1.10.0",
     "pre-commit": "^1.1.3",
-    "wetland": "^2.2.0",
-    "@rdcl/nonce": "^1.0.1",
-    "rimraf": "^2.6.1"
+    "rimraf": "^2.6.1",
+    "wetland": "^2.2.0"
+  },
+  "jest-junit": {
+    "output": "shippable/testresults/jesttests.xml"
   },
   "jest": {
+    "coverageDirectory": "shippable/testresults",
+    "testResultsProcessor": "./node_modules/jest-junit",
     "setupTestFrameworkScriptFile": "./test/integration/setup",
     "testEnvironment": "node",
     "testPathIgnorePatterns": [
