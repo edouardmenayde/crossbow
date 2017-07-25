@@ -7,13 +7,13 @@
     "url": "git@github.com:edouardmenayde/crossbow.git"
   },
   "scripts": {
-    "start": "npm run generate:config:local && MOCKED_DATABASE=true env-cmd foundation/environment/security.env.local nodemon ./foundation/devServer --ignore app --exec babel-node",
-    "start:remote": "npm run generate:config:local && MOCKED_DATABASE=false env-cmd foundation/environment/security.env.local nodemon ./foundation/devServer --ignore app --exec babel-node",
+    "start": "MOCKED_DATABASE=true env-cmd foundation/environment/security.env.local nodemon ./foundation/devServer --ignore app --exec babel-node",
+    "start:remote": "MOCKED_DATABASE=false env-cmd foundation/environment/security.env.local nodemon ./foundation/devServer --ignore app --exec babel-node",
     "generate:config": "node foundation/generateConfig/index.js",
     "generate:config:local": "env-cmd foundation/environment/security.env.local npm run generate:config",
     "generate:config:prod": "env-cmd foundation/environment/security.env.prod npm run generate:config",
     "update-schema": "babel-node foundation/graphql/updateSchema.js",
-    "build:api": "npm run generate:config:prod && NODE_ENV=production babel --out-dir='dist/api' --ignore='__tests__/*' ./api",
+    "build:api": "NODE_ENV=production babel --out-dir='dist/api' --ignore='__tests__/*' ./api",
     "build:api:node_modules": "cd api && npm i && cd ..",
     "deploy": "npm run deploy:api",
     "deploy:api": "npm run build:api && npm run build:api:node_modules && cd api && serverless --stage=production deploy",

@@ -1,15 +1,6 @@
-import {GraphQLObjectType, GraphQLNonNull, GraphQLInputObjectType, GraphQLList, GraphQLInt} from 'graphql';
+import {GraphQLObjectType, GraphQLNonNull, GraphQLList} from 'graphql';
 import Service from '../types/Service';
 import withAuth from '../../lib/auth';
-
-const ServicesForUserInput = new GraphQLInputObjectType({
-  name  : 'ServicesForUserInput',
-  fields: () => ({
-    userID: {
-      type: new GraphQLNonNull(GraphQLInt),
-    },
-  }),
-});
 
 const ServicesForUserPayload = new GraphQLObjectType({
   name  : 'ServicesForUserPayload',
@@ -22,12 +13,7 @@ const ServicesForUserPayload = new GraphQLObjectType({
 
 
 export default {
-  type       : ServicesForUserPayload,
-  args       : {
-    input: {
-      type: ServicesForUserInput,
-    },
-  },
+  type       : new GraphQLNonNull(ServicesForUserPayload),
   description: "All service, containing whether it was link to one or multiple accounts, for the user",
   resolve    : withAuth(async (_, {}, {token, wetland}) => {
     const manager           = wetland.getManager();
