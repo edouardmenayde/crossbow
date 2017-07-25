@@ -1,30 +1,34 @@
 import bcrypt from '../../utils/bcrypt';
 import {Entity} from 'wetland';
+import {entity, increments, primary, field, oneToMany} from 'wetland/dist/src/decorators/Mapping';
 
-/**
- * @Todo:: Add createdAt and updatedAt.
- * @type {User}
- */
+@entity()
 export default class User extends Entity {
-  static setMapping(mapping) {
-    // Primary Key
-    mapping.forProperty('id').increments().primary();
+  @increments()
+  @primary()
+  id = null;
 
-    // Fields
-    mapping.forProperty('createdAt').field({
-      type: 'datetime',
-    });
-    mapping.forProperty('updatedAt').field({
-      type: 'datetime',
-    });
-    mapping.forProperty('username').field({type: 'string'});
-    mapping.forProperty('password').field({type: 'string'});
+  @field({type: 'datetime'})
+  createdAt = null;
 
-    // Relations
-    mapping.forProperty('serviceLinks').oneToMany({targetEntity: 'ServiceLink', inversedBy: 'user'});
-    mapping.forProperty('memberships').oneToMany({targetEntity: 'Membership', inversedBy: 'user'});
-    mapping.forProperty('teamInvites').oneToMany({targetEntity: 'TeamInvite', inversedBy: 'team'});
-  }
+  @field({type: 'datetime'})
+  updatedAt = null;
+
+  @field({type: 'string'})
+  username = null;
+
+  @field({type: 'string'})
+  password = null;
+
+  @oneToMany({targetEntity: 'ServiceLink', inversedBy: 'user'})
+  serviceLinks = [];
+
+  @oneToMany({targetEntity: 'Membership', inversedBy: 'user'})
+  memberships = [];
+
+  @oneToMany({targetEntity: 'TeamInvite', inversedBy: 'team'})
+  teamInvites = [];
+
 
   /**
    * Before creating the user, make sure the password gets hashed.

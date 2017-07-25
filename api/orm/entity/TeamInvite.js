@@ -1,32 +1,31 @@
-import {Entity} from 'wetland';
+import {entity, increments, primary, field, manyToOne} from 'wetland/dist/src/decorators/Mapping';
 
-export default class TeamInvite extends Entity {
-  constructor() {
-    super(...arguments);
+@entity()
+export default class TeamInvite {
+  @increments()
+  @primary()
+  id = null;
 
-    this.expiresIn = 0;
-    this.uses      = 0;
-  }
+  @field({type: 'datetime'})
+  createdAt = null;
 
-  static setMapping(mapping) {
-    // Primary Key
-    mapping.forProperty('id').increments().primary();
+  @field({type: 'datetime'})
+  updatedAt = null;
 
-    // Fields
-    mapping.forProperty('createdAt').field({
-      type: 'datetime',
-    });
-    mapping.forProperty('updatedAt').field({
-      type: 'datetime',
-    });
-    mapping.forProperty('token').field({type: 'string'});
-    mapping.forProperty('expiresIn').field({type: 'integer'});
-    mapping.forProperty('uses').field({type: 'integer'});
+  @field({type: 'string'})
+  token = null;
 
-    // Relations
-    mapping.forProperty('requestor').manyToOne({targetEntity: 'User', mappedBy: 'invites'});
-    mapping.forProperty('team').manyToOne({targetEntity: 'Team', mappedBy: 'teamInvites'});
-  }
+  @field({type: 'integer'})
+  expiresIn = 0;
+
+  @field({type: 'integer'})
+  uses = 0;
+
+  @manyToOne({targetEntity: 'User', mappedBy: 'invites'})
+  requestor = null;
+
+  @manyToOne({targetEntity: 'Team', mappedBy: 'teamInvites'})
+  team = null;
 
   beforeCreate() {
     this.createdAt = this.updatedAt = new Date();

@@ -1,21 +1,32 @@
+import {
+  entity,
+  increments,
+  primary,
+  field,
+  manyToOne,
+  manyToMany,
+} from 'wetland/dist/src/decorators/Mapping';
+
+@entity()
 export default class Project {
-  static setMapping(mapping) {
-    // Primary Key
-    mapping.forProperty('id').increments().primary();
+  @increments()
+  @primary()
+  id = null;
 
-    // Fields
-    mapping.forProperty('createdAt').field({
-      type: 'datetime',
-    });
-    mapping.forProperty('updatedAt').field({
-      type: 'datetime',
-    });
-    mapping.forProperty('name').field({type: 'string'});
+  @field({type: 'datetime'})
+  createdAt = null;
 
-    // Relations
-    mapping.forProperty('team').manyToOne({targetEntity: 'Team', mappedBy: 'projects'});
-    mapping.forProperty('services').manyToMany({targetEntity: 'Service', mappedBy: 'projects'});
-  }
+  @field({type: 'datetime'})
+  updatedAt = null;
+
+  @field({type: 'string'})
+  name = null;
+
+  @manyToOne({targetEntity: 'Team', mappedBy: 'projects'})
+  team = null;
+
+  @manyToMany({targetEntity: 'Service', mappedBy: 'projects'})
+  services = [];
 
   beforeCreate() {
     this.createdAt = this.updatedAt = new Date();

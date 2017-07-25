@@ -1,25 +1,31 @@
+import {entity, increments, primary, field, oneToMany} from 'wetland/dist/src/decorators/Mapping';
+
+@entity()
 export default class Team {
-  static setMapping(mapping) {
-    // Primary Key
-    mapping.forProperty('id').increments().primary();
+  @increments()
+  @primary()
+  id = null;
 
-    // Fields
-    mapping.forProperty('createdAt').field({
-      type: 'datetime',
-    });
-    mapping.forProperty('updatedAt').field({
-      type: 'datetime',
-    });
-    mapping.forProperty('name').field({
-      type    : 'string',
-      nullable: true,
-    });
+  @field({type: 'datetime'})
+  createdAt = null;
 
-    // Relations
-    mapping.forProperty('projects').oneToMany({targetEntity: 'Project', inversedBy: 'team'});
-    mapping.forProperty('members').oneToMany({targetEntity: 'Membership', inversedBy: 'team'});
-    mapping.forProperty('invites').oneToMany({targetEntity: 'TeamInvite', inversedBy: 'team'});
-  }
+  @field({type: 'datetime'})
+  updatedAt = null;
+
+  @field({
+    type    : 'string',
+    nullable: true,
+  })
+  name = null;
+
+  @oneToMany({targetEntity: 'Project', inversedBy: 'team'})
+  projects = [];
+
+  @oneToMany({targetEntity: 'Membership', inversedBy: 'team'})
+  members = [];
+
+  @oneToMany({targetEntity: 'TeamInvite', inversedBy: 'team'})
+  invites = [];
 
   beforeCreate() {
     this.createdAt = this.updatedAt = new Date();
