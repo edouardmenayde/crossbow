@@ -1,23 +1,30 @@
+import {
+  entity,
+  increments,
+  primary,
+  field,
+  uniqueConstraint,
+  oneToMany,
+  manyToMany,
+} from 'wetland/dist/src/decorators/Mapping';
 import ServiceRepository from '../repository/ServiceRepository';
 
+@entity({repository: ServiceRepository})
+@uniqueConstraint('tag')
 export default class Service {
-  static setMapping(mapping) {
-    // Repository
-    mapping.entity({repository: ServiceRepository});
+  @increments()
+  @primary()
+  id = null;
 
-    // Primary Key
-    mapping.forProperty('id').increments().primary();
+  @field({type: 'string'})
+  name = null;
 
-    // Fields
-    mapping.forProperty('name').field({type: 'string'});
-    mapping.forProperty('tag').field({type: 'string'});
+  @field({type: 'string'})
+  tag = null;
 
-    // Constraints
-    mapping.uniqueConstraint('tag');
+  @oneToMany({targetEntity: 'ServiceLink', mappedBy: 'service'})
+  links = [];
 
-    // Relations
-    mapping.forProperty('links').oneToMany({targetEntity: 'ServiceLink', mappedBy: 'service'});
-    mapping.forProperty('projects').manyToMany({targetEntity: 'Project', inversedBy: 'services'});
-
-  }
+  @manyToMany({targetEntity: 'Project', inversedBy: 'services'})
+  projects = [];
 };

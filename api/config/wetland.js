@@ -34,4 +34,4 @@ if (ENV === 'test') {
   wetland.dataDirectory                           = path.resolve(process.cwd(), 'test', '.data');
 }
 
-export default wetland;
+module.exports = wetland;
