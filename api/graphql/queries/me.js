@@ -1,28 +1,23 @@
-import {GraphQLObjectType, GraphQLNonNull, GraphQLBoolean} from 'graphql';
-import User from '../types/User';
+import {GraphQLBoolean} from 'graphql';
 
-const NAME = 'Me';
+export default (typesManager) => {
+  return typesManager.generateQuery({
+    name         : 'Me',
+    payloadFields: () => ({
+      user     : {
+        type: typesManager.types.get('User'),
+      },
+      connected: {
+        type: GraphQLBoolean,
+      },
+    }),
+    description  : 'Get connected user payload.',
+    resolve      : async (_, {}, {token}) => {
+      if (!token) {
+        return {connected: false};
+      }
 
-const payload = new GraphQLObjectType({
-  name  : NAME + 'Payload',
-  fields: () => ({
-    user     : {
-      type: User,
+      return {user: token.user, connected: false};
     },
-    connected: {
-      type: GraphQLBoolean,
-    },
-  }),
-});
-
-export default {
-  type       : new GraphQLNonNull(payload),
-  description: 'Get connected user payload.',
-  resolve    : async (_, {}, {token}) => {
-    if (!token) {
-      return {connected: false};
-    }
-
-    return {user: token.user, connected: false};
-  },
+  });
 };

@@ -81,5 +81,7 @@
       "api/utils/*js"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "homefront": "^2.0.0"
+  }
 }
