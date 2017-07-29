@@ -1,5 +1,5 @@
 import {graphql} from 'graphql';
-import Schema from './schema';
+import {TypeManager} from './TypeManager';
 import jwt from '../utils/jwt';
 import findToken from '../utils/findToken';
 import getWetland from '../utils/getWetland';
@@ -25,9 +25,10 @@ const decodeToken = (req, callback) => {
 export default (query, variables, req) => {
   return new Promise(resolve => {
     decodeToken(req, (error, token) => {
-      const wetland = getWetland();
+      const wetland     = getWetland();
+      const typeManager = new TypeManager(wetland);
 
-      return resolve(graphql(Schema, query, null, {
+      return resolve(graphql(typeManager.generateSchema(), query, null, {
         auth         : {
           isAuthenticated: !!token,
           scope          : null,

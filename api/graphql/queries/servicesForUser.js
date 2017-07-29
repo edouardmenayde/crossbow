@@ -1,28 +1,25 @@
-import {GraphQLObjectType, GraphQLNonNull, GraphQLList} from 'graphql';
-import Service from '../types/Service';
+import {GraphQLList} from 'graphql';
 import withAuth from '../../lib/auth';
 
-const ServicesForUserPayload = new GraphQLObjectType({
-  name  : 'ServicesForUserPayload',
-  fields: () => ({
-    services: {
-      type: new GraphQLList(Service),
-    },
-  }),
-});
+export default (typesManager) => {
+  return typesManager.generateQuery({
+    name         : 'ServicesForUser',
+    payloadFields: () => ({
+      services: {
+        type: new GraphQLList(typesManager.types.get('Service')),
+      },
+    }),
+    description  : "All service, containing whether it was link to one or multiple accounts, for the user",
+    resolve      : withAuth(async (_, {}, {token, wetland}) => {
+      const manager           = wetland.getManager();
+      const ServiceRepository = manager.getRepository('Service');
 
+      let services = await ServiceRepository.findForUserWithLinks({
+        userID: token.user.id,
+      });
 
-export default {
-  type       : new GraphQLNonNull(ServicesForUserPayload),
-  description: "All service, containing whether it was link to one or multiple accounts, for the user",
-  resolve    : withAuth(async (_, {}, {token, wetland}) => {
-    const manager           = wetland.getManager();
-    const ServiceRepository = manager.getRepository('Service');
-
-    let services = await ServiceRepository.findForUserWithLinks({
-      userID: token.user.id,
-    });
-
-    return {services};
-  }),
+      return {services};
+    }),
+  });
 };
+

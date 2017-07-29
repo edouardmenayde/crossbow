@@ -1,28 +1,22 @@
-import {GraphQLObjectType, GraphQLNonNull, GraphQLList} from 'graphql';
-import Service from '../types/Service';
+import {GraphQLList} from 'graphql';
 import withAuth from '../../lib/auth';
 
-const NAME = 'Services';
+export default (typesManager) => {
+  return typesManager.generateQuery({
+    name         : 'Services',
+    payloadFields: () => ({
+      services: {
+        type: new GraphQLList(typesManager.types.get('Service')),
+      },
+    }),
+    description  : 'All services.',
+    resolve      : withAuth(async (_, {}, {wetland}) => {
+      const manager           = wetland.getManager();
+      const ServiceRepository = manager.getRepository('Service');
 
-const payload = new GraphQLObjectType({
-  name  : NAME + 'Payload',
-  fields: () => ({
-    services: {
-      type: new GraphQLList(Service),
-    },
-  }),
-});
+      let services = await ServiceRepository.find();
 
-
-export default {
-  type       : new GraphQLNonNull(payload),
-  description: 'All service',
-  resolve    : withAuth(async (_, {}, {wetland}) => {
-    const manager           = wetland.getManager();
-    const ServiceRepository = manager.getRepository('Service');
-
-    let services = await ServiceRepository.find();
-
-    return {services};
-  }),
+      return {services};
+    }),
+  });
 };
