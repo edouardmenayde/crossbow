@@ -2,11 +2,11 @@ import {requestWithPatching, getToken} from '../utils';
 
 describe('Graphql::queries::me', () => {
 
-  test('Should return the authenticated user', async () => {
-    const token = await getToken();
+    test('Should return the authenticated user', async () => {
+        const token = await getToken();
 
-    //language=GraphQL
-    const query = `
+        //language=GraphQL
+        const query = `
      query me {
        me {
          user {
@@ -15,23 +15,23 @@ describe('Graphql::queries::me', () => {
        }
       }`;
 
-    const results = await requestWithPatching(query, null, {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
+        const results = await requestWithPatching(query, null, {
+            headers: {
+                authorization: `Bearer ${token}`,
+            },
+        });
+
+        expect(results.errors).toBeUndefined();
+
+        expect(results.data.me.user).toMatchObject({
+            id: expect.any(Number),
+        });
+
     });
 
-    expect(results.errors).toBeUndefined();
-
-    expect(results.data.me.user).toMatchObject({
-      id: expect.any(Number),
-    });
-
-  });
-
-  test('Should return null', async () => {
-    //language=GraphQL
-    const query = `
+    test('Should return null', async () => {
+        //language=GraphQL
+        const query = `
      query me {
        me {
          user {
@@ -40,10 +40,10 @@ describe('Graphql::queries::me', () => {
        }
       }`;
 
-    const results = await requestWithPatching(query, null);
+        const results = await requestWithPatching(query, null);
 
-    expect(results.errors).toBeUndefined();
+        expect(results.errors).toBeUndefined();
 
-    expect(results.data.me.user).toBeNull();
-  });
+        expect(results.data.me.user).toBeNull();
+    });
 });

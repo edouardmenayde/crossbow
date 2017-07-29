@@ -18,7 +18,7 @@
   },
   "rules": {
     "no-extra-semi": 0,
-//    "jest/no-disabled-tests": 1,
+    //    "jest/no-disabled-tests": 1,
     "jest/no-focused-tests": 1,
     "jest/no-identical-title": 2,
     "no-empty": 0,
@@ -29,12 +29,15 @@
     "comma-style": 2,
     "comma-dangle": [
       2,
-      "always-multiline" // Permits adding a new line to an object without modifying the last
+      "always-multiline"
+      // Permits adding a new line to an object without modifying the last
     ],
     "indent": [
       "error",
-      2,
-      {"SwitchCase": 1}
+      4,
+      {
+        "SwitchCase": 1
+      }
     ],
     "no-trailing-spaces": [
       2,
