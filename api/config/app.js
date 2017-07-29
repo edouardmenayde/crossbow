@@ -1,5 +1,5 @@
 export default {
-  teamInvites       : {
-    nonceLength: 7,
-  },
+    teamInvites: {
+        nonceLength: 7,
+    },
 };

@@ -1,12 +1,12 @@
 import graphQLHandler from '../../../api/graphql/index';
 
 export const requestWithPatching = (query, variables, req = {headers: {}}) => {
-  return request(query, variables, req)
-    .then(response => JSON.parse(JSON.stringify(response)));
+    return request(query, variables, req)
+        .then(response => JSON.parse(JSON.stringify(response)));
 };
 
 export const request = (query, variables, req = {headers: {}}) => {
-  return graphQLHandler(query, variables, req);
+    return graphQLHandler(query, variables, req);
 };
 
 //language=GraphQL
@@ -33,16 +33,16 @@ const signupQuery = `
  * Creates a new user and signin this user.
  */
 export const getToken = async () => {
-  const newUser = {
-    username: 'TestUser',
-    password: '123456789',
-  };
+    const newUser = {
+        username: 'TestUser',
+        password: '123456789',
+    };
 
-  await request(signupQuery, {
-    input: newUser,
-  });
+    await request(signupQuery, {
+        input: newUser,
+    });
 
-  const {data: {signin: {token}}} = await request(signinQuery, {input: newUser});
+    const {data: {signin: {token}}} = await request(signinQuery, {input: newUser});
 
-  return token;
+    return token;
 };

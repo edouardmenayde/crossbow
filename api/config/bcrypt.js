@@ -1,3 +1,3 @@
 export default {
-  saltLength: 10,
+    saltLength: 10,
 };

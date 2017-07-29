@@ -2,34 +2,34 @@ import nonceGenerator from '@rdcl/nonce';
 import config from '../config/app';
 
 const generateToken = () => {
-  return nonceGenerator(config.teamInvites.nonceLength);
+    return nonceGenerator(config.teamInvites.nonceLength);
 };
 
 class TeamInviteService {
-  async create(_, {input}, {wetland, token}) {
-    try {
-      const manager   = wetland.getManager();
-      const populator = wetland.getPopulator(manager);
+    async create(_, {input}, {wetland, token}) {
+        try {
+            const manager   = wetland.getManager();
+            const populator = wetland.getPopulator(manager);
 
-      const TeamInvite = manager.getEntity('TeamInvite');
+            const TeamInvite = manager.getEntity('TeamInvite');
 
-      const nonce = await generateToken();
+            const nonce = await generateToken();
 
-      const teamInvite = populator.assign(TeamInvite, {
-        token: nonce,
-        expiresIn: -1,
-        user     : token.user.id,
-        ...input,
-      });
+            const teamInvite = populator.assign(TeamInvite, {
+                token    : nonce,
+                expiresIn: -1,
+                user     : token.user.id,
+                ...input,
+            });
 
-      await manager.persist(teamInvite).flush();
+            await manager.persist(teamInvite).flush();
 
-      return {teamInvite};
+            return {teamInvite};
+        }
+        catch (error) {
+            throw error;
+        }
     }
-    catch (error) {
-      throw error;
-    }
-  }
 }
 
 export default new TeamInviteService;

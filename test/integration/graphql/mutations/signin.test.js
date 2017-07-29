@@ -3,14 +3,14 @@ import jwt from '../../../../api/utils/jwt';
 
 describe('Graphql::mutations::signin', () => {
 
-  const username = 'Obama';
-  const password = '123456789';
+    const username = 'Obama';
+    const password = '123456789';
 
-  const user = {username, password};
+    const user = {username, password};
 
-  beforeAll(async () => {
-    //language=GraphQL
-    const query = `
+    beforeAll(async () => {
+        //language=GraphQL
+        const query = `
       mutation signup ($input: SignupInput!){
         signup (input: $input) {
           user {
@@ -22,14 +22,14 @@ describe('Graphql::mutations::signin', () => {
         }
       }`;
 
-    await request(query, {
-      input: user,
+        await request(query, {
+            input: user,
+        });
     });
-  });
 
-  test('Should signin a user', async () => {
-    //language=GraphQL
-    const query = `
+    test('Should signin a user', async () => {
+        //language=GraphQL
+        const query = `
       mutation signin ($input: SigninInput!) {
         signin (input: $input) {
           token,
@@ -42,32 +42,32 @@ describe('Graphql::mutations::signin', () => {
         }
       }`;
 
-    const results = await requestWithPatching(query, {
-      input: user,
+        const results = await requestWithPatching(query, {
+            input: user,
+        });
+
+        expect(results.errors).toBeUndefined();
+
+        expect(results.data.signin.token).toBeDefined();
+
+        const payload = await jwt.decode(results.data.signin.token);
+
+        expect(payload.user).toMatchObject({
+            username,
+            id: expect.any(Number),
+        });
+        expect(payload.user).toMatchObject({
+            username: results.data.signin.user.username,
+            id      : expect.any(Number),
+        });
+
+        let createdAt = results.data.signin.user.createdAt;
+        let updatedAt = results.data.signin.user.updatedAt;
+
+        expect(createdAt).toBeDefined();
+        expect(updatedAt).toBeDefined();
+
+        expect(() => new Date(createdAt)).not.toThrow();
+        expect(() => new Date(updatedAt)).not.toThrow();
     });
-
-    expect(results.errors).toBeUndefined();
-
-    expect(results.data.signin.token).toBeDefined();
-
-    const payload = await jwt.decode(results.data.signin.token);
-
-    expect(payload.user).toMatchObject({
-      username,
-      id: expect.any(Number),
-    });
-    expect(payload.user).toMatchObject({
-      username: results.data.signin.user.username,
-      id      : expect.any(Number),
-    });
-
-    let createdAt = results.data.signin.user.createdAt;
-    let updatedAt = results.data.signin.user.updatedAt;
-
-    expect(createdAt).toBeDefined();
-    expect(updatedAt).toBeDefined();
-
-    expect(() => new Date(createdAt)).not.toThrow();
-    expect(() => new Date(updatedAt)).not.toThrow();
-  });
 });
